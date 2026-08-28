@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "wsl.exe",
+            "args": [
+                "/home/aina/.config/herd-lite/bin/php",
+                "/home/aina/stage2026/projet_stage/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
