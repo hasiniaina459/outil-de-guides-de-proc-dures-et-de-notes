@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('id_procedure');
             $table->string('procedure_title');
             $table->string('description')->nullable();
-            $table->timestamp('add_date')->nullable();
+            $table->boolean('procedure_status')->default(false);
+            $table->timestamp('add_date');
             $table->timestamp('remove_date')->nullable();
             $table->timestamps();
         });

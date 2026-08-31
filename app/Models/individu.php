@@ -11,14 +11,19 @@ class individu extends Model
     protected $table='individu';
     protected $primaryKey='id_individu';
     protected $fillable=['name','firstname','phone','email','address','id_service'];
+    protected $hidden=['password'];
+    protected function casts():array
+    {
+        return['password'=>'hashed',];
+    }
     // COMPOSER : un individu est dans un seul service
-    public function services():BelongsTo
+    public function service():BelongsTo
     {
         return $this->belongsTo(service::class,'id_service','id_service');
     }
     // RECEVOIR : un individu peut recevoir plusieurs rappels
     public function rappels():BelongsToMany
     {
-        return $this->belongsToMany(rappel::class,'recevoir_table','id_individu','id_rappel');
+        return $this->belongsToMany(rappel::class,'recevoir', 'id_individu', 'id_rappel');
     }
 }

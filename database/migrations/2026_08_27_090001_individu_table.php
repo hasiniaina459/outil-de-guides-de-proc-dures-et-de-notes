@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('address');
+            $table->string('password');
             $table->foreignId('id_service')->nullable()
                 ->constrained('service', 'id_service')
                 ->nullOnDelete();
