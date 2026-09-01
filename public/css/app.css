@@ -1,0 +1,144 @@
+@font-face {
+    font-family: "Le Murmure";
+    src: url("geological.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+:root {
+    --fond: #0C161D;
+    --secondary: #1E4B67;
+    --accent: #1E5E85;
+    --text: #E2F0F8;
+    --light: #FFFFFF;
+    --dark-color: #2c3e50;
+    --btn1: #211547;
+    --btn2: #4517CF;
+    --btn3: #E4DEF7;
+    --btn4: #FCFCFC;
+    --success: #28a745;
+    --error: #dc3545;
+
+    --font-display: "Geological", "Playfair Display", serif;
+    --font-body: "Jost", "Segoe UI", sans-serif;
+}
+/*Sombre : #161028 Foncé : #211547 Accent : #4517CF Clair : #E4DEF7 Blanc : #FCFCFC*/
+body {
+    font-family: var(--font-body);
+    margin: 0;
+    background: var(--fond);
+    color: #222;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+header {
+    background: var(--secondary);
+    border-bottom: var(--accent) 3px solid;
+    padding: 15px 30px;
+}
+
+header nav a {
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+header nav a:hover{
+    width: 100%;
+    text-decoration: dashed;
+    color: var(--light);
+}
+a{
+    color: var(--accent);
+    text-decoration: none;
+}
+
+main {
+    max-width: 900px;
+    margin: 30px auto;
+    background-color: var(--light);
+    padding: 25px;
+    border-radius: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th,
+table td {
+    border: 1px solid darkgray;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+table th {
+    background: #c8e7ee;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--light);
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--btn4);
+}
+
+.btn-edit {
+    background: var(--btn3);
+}
+
+.btn-delete {
+    background: var(--btn2);
+}
+
+.btn-back {
+    background: var(--btn1);
+}
+
+form.inline {
+    display: inline;
+}
+
+.alert-success {
+    background: #dff0d8;
+    color: var(--success);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.error {
+    color: var(--error);
+    font-size: 13px;
+}

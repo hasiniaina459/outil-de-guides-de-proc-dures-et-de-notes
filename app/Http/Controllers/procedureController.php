@@ -35,13 +35,13 @@ class procedureController extends Controller
             [
             'procedure_title'=>'required|string',
             'description'=>'nullable|string|max:255',
-            'procedure_status'=>'boolean',
             'add_date'=>'required|date',
             'remove_date'=>'nullable|date',
             'service'=>'required|array|min:1',
             'service.*'=>'exists:service,id_service',
             ]
         );
+        $validate['procedure_status']=$request->boolean('procedure_status', false);
         $procedures=procedure::create($validate);
         $procedures->services()->attach($validate['service']);
         return redirect()->route('procedures.index')->with('success','procedure créée avec succés');
@@ -75,13 +75,13 @@ class procedureController extends Controller
             [
                 'procedure_title' => 'required|string',
                 'description' => 'nullable|string|max:255',
-                'procedure_status' => 'boolean',
                 'add_date' => 'required|date',
                 'remove_date' => 'nullable|date',
                 'service' => 'required|array|min:1',
                 'service.*' => 'exists:service,id_service',
             ]
         );
+        $validate['procedure_status'] = $request->boolean('procedure_status', false);
         $procedures->update($validate);
         $procedures->services()->sync($validate['service']);
         return redirect()->route('procedures.index')->with('success', 'procedure modifié avec succés');
