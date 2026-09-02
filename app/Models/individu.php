@@ -10,11 +10,12 @@ class individu extends Model
 {
     protected $table='individu';
     protected $primaryKey='id_individu';
-    protected $fillable=['name','firstname','phone','email','address','id_service'];
+    protected $fillable=['name','firstname','phone','email','address','id_service','notif_preference','password'];
     protected $hidden=['password'];
     protected function casts():array
     {
-        return['password'=>'hashed',];
+        return['password'=>'hashed',
+            'notif_preference'=>'array'];
     }
     // COMPOSER : un individu est dans un seul service
     public function service():BelongsTo

@@ -2,12 +2,13 @@
 @section('title', 'Création d\'une procédure')
 @section('content')
     <h1>Création d\'une procédure</h1>
+    <a href="{{ route('procedures.index') }}" class="btn-index">Retour à la liste des procédures</a>
     <form action="{{ route('procedures.store') }}" method="POST">
         @csrf
         <div>
-            <label for="name">Nom:</label>
-            <input type="text" name="name" id="name" value="{{old('name')}}" placeholder="Entrez le nom de la procédure" required>
-            @error('name')
+            <label for="procedure_title">Nom:</label>
+            <input type="text" name="procedure_title" id="procedure_title" value="{{old('procedure_title')}}" placeholder="Entrez le nom de la procédure" required>
+            @error('procedure_title')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>
@@ -20,15 +21,25 @@
         </div>
         <div>
             <label for="status">Statut:</label>
-            <select name="status" id="status" required>
-                <option value="draft" {{ old('status') == '1' ? 'selected' : '' }}>effectuer</option>
-                <option value="published" {{ old('status') == '0' ? 'selected' : '' }}>non effectuer</option>
-            </select>
-            @error('status')
+            <input type="radio" name="status" value="0" id="status" {{ old('status') ? 'checked' : '' }}>effectuer
+            <input type="radio" name="status" value="1" id="status" {{ old('status') ? 'checked' : '' }}>non effectuer
+            @error('procedure_status')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>
-    </div>
-    <button type="submit">Créer la procédure</button>
-</form>
+        <div>
+            <label for="id_service">Service:</label>
+            @foreach($services as $service)
+            <div>
+                <input type="checkbox" name="service[]" value="{{ $service->id_service }}" id="service_{{ $service->id_service }}"
+                {{in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>
+                <label for="service_{{ $service->id_service }}">{{ $service->service_name }}</label>
+            </div>
+            @endforeach
+            @error('id_service')
+                <div class="error">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit">Créer la procédure</button>
+    </form>
 @endsection

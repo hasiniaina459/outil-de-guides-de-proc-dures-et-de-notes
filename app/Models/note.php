@@ -9,11 +9,7 @@ class note extends Model
 {
     protected $table='note';
     protected $primaryKey = 'id_note';
-    protected $fillable = ['note_title','note_preference','content','note_status','note_date'];
-    protected function casts(): array
-    {
-        return ['note_preference' => 'array'];
-    }
+    protected $fillable = ['note_title','content','note_status','note_date'];
     //ENVOYER:une note est envoye à au moin un service
     public function services():BelongsToMany
     {

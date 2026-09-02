@@ -9,7 +9,6 @@
             <tr>
                 <th>title</th>
                 <th>content</th>
-                <th>preference</th>
                 <th>status</th>
                 <th>date</th>
                 <th>Actions</th>
@@ -18,14 +17,14 @@
         <tbody>
             @foreach($notes as $note)
             <tr>
-                <td>{{ $note->title }}</td>
+                <td>{{ $note->note_title }}</td>
                 <td>{{ $note->content }}</td>
-                <td>{{ $note->preference }}</td>
                 <td>{{ $note->note_status }}</td>
-                <td>{{ $note->add_date }}</td>
+                <td>{{ $note->note_date }}</td>
                 <td>
-                    <a href="{{ route('notes.edit', $note->id) }}" class="btn-edit">Edit</a>
-                    <form action="{{ route('notes.destroy', $note->id ) }}" method="POST" class="inline">
+                    <a href="{{ route('notes.show', $note->id_note) }}" class="btn-show">Show</a>
+                    <a href="{{ route('notes.edit', $note->id_note) }}" class="btn-edit">Edit</a>
+                    <form action="{{ route('notes.destroy', $note->id_note) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-delete">Delete</button>

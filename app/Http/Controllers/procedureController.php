@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\procedure;
 use App\Models\service;
+use App\Models\note;
 use Illuminate\Http\Request;
 
 class procedureController extends Controller
@@ -29,21 +30,27 @@ class procedureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,procedure $procedures)
+    public function store(Request $request,procedure $procedures,note $notes)
     {
         $validate=$request->validate(
             [
             'procedure_title'=>'required|string',
             'description'=>'nullable|string|max:255',
-            'add_date'=>'required|date',
             'remove_date'=>'nullable|date',
             'service'=>'required|array|min:1',
             'service.*'=>'exists:service,id_service',
             ]
         );
+        $validate['add_date']=now();
         $validate['procedure_status']=$request->boolean('procedure_status', false);
         $procedures=procedure::create($validate);
         $procedures->services()->attach($validate['service']);
+        $note=note::create([
+            'note_title' => 'Note for procedure: ' . $validate['procedure_title'],
+            'content' => 'This is a note associated with the procedure: ' . $validate['procedure_title'],
+            'note_date' => now(),
+            'note_status' => false,
+        ]);
         return redirect()->route('procedures.index')->with('success','procedure créée avec succés');
     }
 
@@ -75,12 +82,12 @@ class procedureController extends Controller
             [
                 'procedure_title' => 'required|string',
                 'description' => 'nullable|string|max:255',
-                'add_date' => 'required|date',
                 'remove_date' => 'nullable|date',
                 'service' => 'required|array|min:1',
                 'service.*' => 'exists:service,id_service',
             ]
         );
+        $validate['add_date'] = now();
         $validate['procedure_status'] = $request->boolean('procedure_status', false);
         $procedures->update($validate);
         $procedures->services()->sync($validate['service']);

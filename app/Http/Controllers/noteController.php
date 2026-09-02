@@ -36,11 +36,11 @@ class noteController extends Controller
                 'note_title'=>'required|string|max:100',
                 'note_preference'=>'required|array|min:1',
                 'content'=>'required|string|max:255',
-                'note_date'=>'required|date',
                 'service'=>'required|array|min:1',
                 'service.*'=>'exists:service,id_service'
             ]
         );
+        $validate['note_date']=now();
         $validate['note_status']=$request->boolean('note_status', false);
         $note=note::create($validate);
         $note->services()->attach($validate['service']);
@@ -74,14 +74,12 @@ class noteController extends Controller
         $validate = $request->validate(
             [
                 'note_title' => 'required|string|max:100',
-                'note_preference' => 'required|array|min:1',
                 'content' => 'required|string|max:255',
-                'note_date' => 'required|date',
                 'service' => 'required|array|min:1',
                 'service.*' => 'exists:service,id_service'
             ]
-        );
-
+        );  
+        $validate['note_date'] = now();
         $validate['note_status'] = $request->boolean('note_status', false);
         $notes->update($validate);
         $notes->services()->sync($validate['service']);

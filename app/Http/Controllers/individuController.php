@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\individu;
 use App\Models\service;
+use App\Models\note;
 use Illuminate\Http\Request;
 
 class individuController extends Controller
@@ -30,7 +31,7 @@ class individuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,note $notes)
     {
         $validate=$request->validate(
             ['name' => 'required|string|max:50',
@@ -38,6 +39,8 @@ class individuController extends Controller
             'phone' => 'nullable|string',
             'email' => 'nullable|string',
             'address' => 'required|string|max:100',
+            'notif_preference' => 'required|array|min:1',
+            'notif_preference.*' => 'in:email,sms,whatsapp',
             'password'=>'required|string|min:8',
             'id_service'=>'required|exists:service,id_service'
             ]
@@ -77,6 +80,8 @@ class individuController extends Controller
                 'firstname' => 'nullable|string|max:100',
                 'phone' => 'nullable|string',
                 'email' => 'nullable|string',
+                'notif_preference' => 'required|array|min:1',
+                'notif_preference.*' => 'in:email,sms,whatsapp',
                 'address' => 'required|string|max:100',
                 'password' => 'required|string|min:8',
                 'id_service' => 'required|exists:service,id_service'

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('note',function(Blueprint $table){
             $table->id('id_note');
             $table->string('note_title');
-            $table->string('note_preference');
             $table->string('content');
             $table->boolean('note_status');
             $table->timestamp('note_date');

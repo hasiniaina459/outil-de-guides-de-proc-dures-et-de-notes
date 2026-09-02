@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title','outils de guides de procédures et de notes')</title>
+    <style media="print">
+        nav, a, button, h1 {
+            display: none !important;
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>

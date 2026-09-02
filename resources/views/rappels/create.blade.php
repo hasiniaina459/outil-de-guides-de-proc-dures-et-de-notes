@@ -2,32 +2,30 @@
 @section('title', 'Création d\'une note')
 @section('content')
     <h1>Création d'une note</h1>
-    <form action="{{ route('notes.store') }}" method="POST">
+    <a href="{{ route('rappels.index') }}" class="btn-index">Retour à la liste des rappels</a>
+    <form action="{{ route('rappels.store') }}" method="POST">
         @csrf
         <div>
-            <label for="title">Titre:</label>
-            <input type="text" name="title" id="title" value="{{old('title')}}" placeholder="Entrez le titre de la note" required>
-            @error('title')
+            <label for="remind_title">Titre:</label>
+            <input type="text" name="remind_title" id="remind_title" value="{{old('remind_title')}}" placeholder="Entrez le titre de la note" required>
+            @error('remind_title')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>
         <div>
-            <label for="content">Contenu:</label>
-            <textarea name="content" id="content" placeholder="Entrez le contenu de la note" required>{{old('content')}}</textarea>
-            @error('content')
+            <label for="remind_date">Date:</label>
+            <input type="date" name="remind_date" id="remind_date" value="{{old('remind_date')}}" required>
+            @error('remind_date')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>
         <div>
-            <label for="status">Statut:</label>
-            <select name="status" id="status" required>
-                <option value="draft" {{ old('status') == '1' ? 'selected' : '' }}>lu</option>
-                <option value="published" {{ old('status') == '0' ? 'selected' : '' }}>non lu</option>
-            </select>
-            @error('status')
+            <label for="remind_number">Nombre de rappel:</label>
+            <input type="number" name="remind_number" id="remind_number" value="{{old('remind_number')}}" placeholder="Entrez le numéro de rappel" required>
+            @error('remind_number')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>
         <button type="submit">Créer la note</button>
-    </form>
+    </form> 
 @endsection

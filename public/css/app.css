@@ -14,14 +14,16 @@
     --dark-color: #2c3e50;
     --btn1: #211547;
     --btn2: #4517CF;
-    --btn3: #E4DEF7;
-    --btn4: #FCFCFC;
+    --btn3: #4c4c4f;
+    --btn4: #5a4f4f;
+    --btn5: #161028;
     --success: #28a745;
     --error: #dc3545;
 
     --font-display: "Geological", "Playfair Display", serif;
     --font-body: "Jost", "Segoe UI", sans-serif;
 }
+
 /*Sombre : #161028 Foncé : #211547 Accent : #4517CF Clair : #E4DEF7 Blanc : #FCFCFC*/
 body {
     font-family: var(--font-body);
@@ -52,8 +54,10 @@ header nav a:hover{
     color: var(--light);
 }
 a{
-    color: var(--accent);
+    color: var(--light);
     text-decoration: none;
+    padding: 10px 10px;
+    border-radius: 25%;
 }
 
 main {
@@ -81,31 +85,45 @@ table th {
     background: #c8e7ee;
 }
 
-.btn {
+
+button{
+    gap: 10px;
+    border-radius: 20%;
     display: inline-block;
     padding: 6px 12px;
     border-radius: 4px;
     text-decoration: none;
     color: var(--light);
+    border: 0px solid var(--btn3);
     font-size: 14px;
     border: none;
+    border-radius: 5%;
     cursor: pointer;
 }
+table a{
+    gap: 10px;
+    color: var(--light);
+    border-radius: 15%;
+}
 
-.btn-primary {
-    background: var(--btn4);
+.btn-create {
+    background-color: var(--btn3);
 }
 
 .btn-edit {
-    background: var(--btn3);
+    background-color: var(--btn3);
 }
 
 .btn-delete {
-    background: var(--btn2);
+    background-color: var(--btn3);
 }
 
-.btn-back {
-    background: var(--btn1);
+.btn-show {
+    background-color: var(--btn3);
+}
+
+.btn-index {
+    background-color: var(--btn3);
 }
 
 form.inline {
