@@ -1,8 +1,17 @@
 @extends('layouts.app')
 @section('title', 'Modifier la procédure')
 @section('content')
-    <h1>Modifier la procédure</h1>
-    <a href="{{ route('procedures.index') }}" class="btn-index">Retour à la liste des procédures</a>
+    <div class="retour">
+        <a href="{{ route('procedures.index') }}" class="btn-index">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                fill="currentColor" viewBox="0 0 24 24">
+                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                <path d="M15 11H8v2h7v4l6-5-6-5z"></path>
+                <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
+            </svg>
+        </a>
+        <h1>Modifier la procédure</h1>
+    </div>
     <form action="{{ route('procedures.update', $procedures->id_procedure) }}" method="POST">
         @csrf
         @method('PUT')
@@ -31,9 +40,8 @@
         <div>
             <label for="id_service">Service:</label>
             @foreach($services as $service)
-                <input type="checkbox" name="service[]" id="service_{{ $service->id_service }}" value="{{ $service->id_service }}" 
-                {{ in_array($service->id_service, old('id_service', $procedures->services->pluck('id_service')->toArray())) ? 'checked' : '' }}>
-                <label for="service_{{ $service->id_service }}">{{ $service->service_name }}</label>
+                <input type="checkbox" name="service[]" id="service_{{ $service->id_service }}" value="{{ $service->id_service }}"
+                {{ in_array($service->id_service, old('id_service', $procedures->services->pluck('id_service')->toArray())) ? 'checked' : '' }}><label for="service_{{ $service->id_service }}">{{ $service->service_name }}</label>
             @endforeach
             @error('id_service')
                 <div class="error">{{ $message }}</div>

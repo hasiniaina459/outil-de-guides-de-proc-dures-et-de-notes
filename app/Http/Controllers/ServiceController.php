@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\individu;
 use App\Models\service;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ServiceController extends Controller
 {

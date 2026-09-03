@@ -22,3 +22,5 @@ Route::resource('notes', noteController::class)
 Route::resource('rappels', rappelController::class)
     ->parameters(['rappels' => 'rappels']);
 
+route::get('individus/{individus}/download',[individuController::class,'download'])
+    ->name('individus.download');

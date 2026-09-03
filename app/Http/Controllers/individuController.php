@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\individu;
 use App\Models\service;
 use App\Models\note;
+use App\Models\rappel;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class individuController extends Controller
 {
@@ -99,5 +101,18 @@ class individuController extends Controller
     {
         $individus->delete();
         return redirect()->route('individus.index')->with('success', 'individu supprimé avec succès.');
+    }
+
+    public function download(individu $individus)
+    {
+        $individus->load('service','rappels');
+        $procedure=$individus->service
+            ? $individus->service->procedures()->get()
+            :collect();
+        $procedure_eff=$procedure->where('procedure_status',true);
+        $procedure_neff=$procedure->where('procedure_status',false);
+        $remind_number=$individus->rappels->count();
+        $pdf = pdf::loadView('individus.pdf', compact('individus','procedure_eff','procedure_neff','remind_number'));
+        return $pdf->download('individus-' . $individus->id_individu . '.pdf');
     }
 }

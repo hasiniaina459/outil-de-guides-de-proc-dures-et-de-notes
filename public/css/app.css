@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "Le Murmure";
+    font-family: "geological";
     src: url("geological.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
@@ -50,14 +50,17 @@ header nav a {
 
 header nav a:hover{
     width: 100%;
+    font-family: var(--font-body);
     text-decoration: dashed;
     color: var(--light);
 }
 a{
     color: var(--light);
+    gap: 10px;
     text-decoration: none;
     padding: 10px 10px;
-    border-radius: 25%;
+    border-radius: 10%;
+    margin: 4px 4px;
 }
 
 main {
@@ -78,7 +81,7 @@ table th,
 table td {
     border: 1px solid darkgray;
     padding: 8px 10px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
@@ -86,26 +89,82 @@ table th {
 }
 
 
-button{
+table td a, button{
     gap: 10px;
     border-radius: 20%;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    margin: 4px 2px;
+    border-radius: 4px;
+    text-decoration: none;
+    background-color: #fff;
+    border: none;
+    color: var(--light);
+    cursor: pointer;
+}
+table td a{
+    width: 30px;
+    height: 30px;
+}
+table td button{
+    width: 50px;
+    height: 50px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-family: var(--font-body);
+}
+button{
+    background-color: var(--btn3);
+    padding: 10px 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.retour{
+    background-color: var(--btn3);
+    font-family: var(--font-body);
+    color: var(--light);
     padding: 6px 12px;
     border-radius: 4px;
     text-decoration: none;
-    color: var(--light);
-    border: 0px solid var(--btn3);
-    font-size: 14px;
-    border: none;
-    border-radius: 5%;
-    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
 }
-table a{
-    gap: 10px;
+.retour a{
     color: var(--light);
-    border-radius: 15%;
+    text-decoration: none;
+    border-radius: 100%;
+    transition: all 0.3s ease;
+}
+.retour a:hover{
+    background-color: var(--light);
+    color: var(--btn3);
+}
+.champ{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;    
 }
 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select::focus{
+    border: 1px solid var(--fond);
+}
 .btn-create {
     background-color: var(--btn3);
 }
@@ -116,9 +175,13 @@ table a{
 
 .btn-delete {
     background-color: var(--btn3);
+    color: var(--light);
 }
 
 .btn-show {
+    background-color: var(--btn3);
+}
+.btn-download{
     background-color: var(--btn3);
 }
 
