@@ -18,7 +18,10 @@ return new class extends Migration
             $table->boolean('note_status');
             $table->timestamp('note_date');
             $table->timestamps();
-            $table->boolean('rappel_create');
+            $table->boolean('rappel_create')->default(0);
+            $table->foreignId('id_procedure')->nullable()
+                ->constrained('procedure', 'id_procedure')
+                ->nullOnDelete();
             });
     }
 

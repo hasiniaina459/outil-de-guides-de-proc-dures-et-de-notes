@@ -12,6 +12,7 @@
             <th>date</th>
             <th>remind number</th>
             <th>actions</th>
+        </tr>
     </thead>
     <tbody>
         @foreach($rappels as $rappel)

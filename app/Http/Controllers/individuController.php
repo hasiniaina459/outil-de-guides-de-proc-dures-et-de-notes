@@ -43,7 +43,7 @@ class individuController extends Controller
             'address' => 'required|string|max:100',
             'notif_preference' => 'required|array|min:1',
             'notif_preference.*' => 'in:email,sms,whatsapp',
-            'password'=>'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
             'id_service'=>'required|exists:service,id_service'
             ]
         );
@@ -85,11 +85,15 @@ class individuController extends Controller
                 'notif_preference' => 'required|array|min:1',
                 'notif_preference.*' => 'in:email,sms,whatsapp',
                 'address' => 'required|string|max:100',
-                'password' => 'required|string|min:8',
+                'password' => 'required|string|min:8|confirmed',
                 'id_service' => 'required|exists:service,id_service'
             ]
         );
-        $validate['password'] = bcrypt($validate['password']);
+        if (!empty($validate['password'])) {
+            $validate['password'] = bcrypt($validate['password']);
+        } else {
+            unset($validate['password']);
+        }
         $individus->update($validate);
         return redirect()->route('individus.index')->with('success', 'individu modifié avec succès.');
     }

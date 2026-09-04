@@ -17,7 +17,7 @@
         <div>
             <label for="name">Nom du service:</label>
             <input type="text" name="service_name" id="name" placeholder="Entrez le nom du service" required>
-            @error('name')
+            @error('service_name')
                 <div class="error">{{ $message }}</div>
             @enderror
         </div>

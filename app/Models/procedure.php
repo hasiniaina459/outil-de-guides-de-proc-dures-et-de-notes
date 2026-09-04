@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class procedure extends Model
 {
@@ -14,5 +15,9 @@ class procedure extends Model
     public function services():BelongsToMany
     {
         return $this->belongsToMany(service::class,'rattacher', 'id_procedure', 'id_service');
+    }
+    public function note(): HasOne
+    {
+        return $this->hasOne(note::class, 'id_procedure', 'id_procedure');
     }
 }

@@ -15,7 +15,7 @@ class CreateRappelForUnreadNotes extends Command
     {
         $notes = note::where('note_status', false)
             ->where('rappel_create', false)
-            ->where('note_date', '<=', now()->subHours(8))
+            ->where('note_date', '<=', now()->subMinutes(8))
             ->with('services.individus')
             ->get();
 
@@ -35,8 +35,7 @@ class CreateRappelForUnreadNotes extends Command
             ]);
 
             $rappel->individus()->attach($individus->pluck('id_individu'));
-
-            $note->update(['rappel_created' => true]);
+            $note->update(['rappel_create' => true]);
         }
 
         $this->info($notes->count() . ' rappel(s) créé(s).');

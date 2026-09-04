@@ -24,8 +24,8 @@
             <td>{{ $individu->firstname }}</td>
             <td>{{ $individu->phone }}</td>
             <td>{{ $individu->email }}</td>
-            <td>{{ implode(', ', $individu->notif_preference) }}</td>
-            <td> 
+            <td>{{ implode(', ', $individu->notif_preference ?? []) }}</td>
+            <td>
                 <a href="{{ route('individus.show', $individu->id_individu) }}" class="btn-show">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         fill="currentColor" viewBox="0 0 24 24">

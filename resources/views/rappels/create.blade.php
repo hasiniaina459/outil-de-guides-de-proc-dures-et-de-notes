@@ -33,7 +33,7 @@
         <select name="individu[]" id="individu" multiple size="6" required>
             @foreach($individus as $individu)
                 <option value="{{ $individu->id_individu }}" 
-                {{in_array($individu->id_indinvidu, old('individu', [])) ? 'selected' : '' }}>{{ $individu->name }}</option>
+                {{in_array($individu->id_individu, old('individu', [])) ? 'selected' : '' }}>{{ $individu->name }}</option>
             @endforeach
         </select>
         @error('individu')

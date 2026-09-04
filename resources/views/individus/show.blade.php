@@ -27,5 +27,5 @@
 <p><strong>Prénom:</strong> {{ $individus->firstname }}</p>
 <p><strong>Email:</strong> {{ $individus->email }}</p>
 <p><strong>Téléphone:</strong> {{ $individus->phone }}</p>
-<p><strong>Préférences de notification:</strong> {{ implode(', ', $individus->notif_preference) }}</p>
+<p><strong>Préférences de notification:</strong> {{ implode(', ', $individus->notif_preference ?? []) }}</p>
 @endsection
