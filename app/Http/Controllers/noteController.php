@@ -105,6 +105,24 @@ class noteController extends Controller
         $validate['note_status'] = $request->boolean('note_status', false);
         $notes->update($validate);
         $notes->services()->sync($validate['service']);
+        $individus = $notes->services->flatMap(function ($service) {
+            return $service->individus;
+        })->unique('id_individu')
+            ->filter(function ($individu) {
+                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
+            });
+
+        foreach ($individus as $individu) {
+            try {
+                Mail::to($individu->email)->queue(new NewNoteNotification($notes));
+            } catch (\Throwable $e) {
+                Log::error('Échec envoi email note', [
+                    'individu_id' => $individu->id_individu,
+                    'note_id' => $notes->id_note,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
         return redirect()->route('notes.index')->with('success', 'note modifié');
     }
 

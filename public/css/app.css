@@ -47,12 +47,17 @@ header nav a {
     margin-right: 15px;
     text-decoration: none;
 }
+header nav a.menubar{
+    display: none;
+}
 
 header nav a:hover{
     width: 100%;
     font-family: var(--font-body);
     text-decoration: dashed;
+    background-color: rgba(0, 0, 0, 0.19);
     color: var(--light);
+    border: 2px inset whitesmoke;
 }
 a{
     color: var(--light);
@@ -120,6 +125,11 @@ button{
     background-color: var(--btn3);
     padding: 10px 10px;
 }
+button:hover{
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
+}
 
 input[type="text"],
 input[type="email"],
@@ -168,25 +178,57 @@ select::focus{
 .btn-create {
     background-color: var(--btn3);
 }
+.btn-create:hover{
+    background-color: var(--light);
+        color: var(--btn3);
+        border: 2px inset var(--btn3);
+}
+
+
 
 .btn-edit {
     background-color: var(--btn3);
+}
+.btn-edit:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 .btn-delete {
     background-color: var(--btn3);
     color: var(--light);
 }
+.btn-delete:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
+}
 
 .btn-show {
     background-color: var(--btn3);
 }
+.btn-show:hover{
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
+}
 .btn-download{
     background-color: var(--btn3);
+}
+.btn-download:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 .btn-index {
     background-color: var(--btn3);
+}
+.btn-index:hover{
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 form.inline {
@@ -222,4 +264,19 @@ form.inline {
 .error {
     color: var(--error);
     font-size: 13px;
+}
+@media ( max-width:638px) {
+    header nav .menu .menubar{
+        display: block;
+    }
+    header nav .element{
+        display: none;
+    }
+    header nav .element.open{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
 }

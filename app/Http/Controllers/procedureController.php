@@ -7,7 +7,6 @@ use App\Models\service;
 use App\Models\note;
 use Illuminate\Http\Request;
 use App\Mail\NewNoteNotification;
-use App\Models\individu;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -34,7 +33,7 @@ class procedureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,procedure $procedures,note $note)
+    public function store(Request $request)
     {
         $validate=$request->validate(
             [
@@ -59,24 +58,7 @@ class procedureController extends Controller
         ]);
         $note->services()->attach($validate['service']);
         $note->load('services.individus');
-        $individus = $note->services->flatMap(function ($service) {
-            return $service->individus;
-        })->unique('id_individu')
-            ->filter(function ($individu) {
-                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
-            });
-
-        foreach ($individus as $individu) {
-            try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($note));
-            } catch (\Throwable $e) {
-                Log::error('Échec envoi email note', [
-                    'individu_id' => $individu->id_individu,
-                    'note_id' => $note->id_note,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
+        $this->sendNoteEmails($note);
         return redirect()->route('procedures.index')->with('success','procedure créée avec succés');
     }
 
@@ -102,7 +84,7 @@ class procedureController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, procedure $procedures,individu $individus)
+    public function update(Request $request, procedure $procedures)
     {
         $validate = $request->validate(
             [
@@ -127,17 +109,7 @@ class procedureController extends Controller
                 'rappel_create' => false,
             ]);
             $note->services()->sync($validate['service']);
-        }
-        foreach ($individus as $individu) {
-            try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($note));
-            } catch (\Throwable $e) {
-                Log::error('Échec envoi email note', [
-                    'individu_id' => $individu->id_individu,
-                    'note_id' => $note->id_note,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+            $this->sendNoteEmails($note);
         }    
         return redirect()->route('procedures.index')->with('success', 'procedure modifié avec succés');
     }
@@ -145,9 +117,30 @@ class procedureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(procedure $procedures)
+    public function destroy(note $note)
     {
-        $procedures->delete();
+        $note->delete();
         return redirect()->route('procedures.index')->with('success', 'procedure supprimé avec succés');
+    }
+    public function sendNoteEmails(note $note):void
+    {
+        $note->load('services.individus');
+        $individus = $note->services->flatMap(function ($service) {
+            return $service->individus;
+        })->unique('id_individu')
+            ->filter(function ($individu) {
+                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
+            });
+        foreach ($individus as $individu) {
+            try {
+                Mail::to($individu->email)->queue(new NewNoteNotification($note));
+            } catch (\Throwable $e) {
+                Log::error('Échec envoi email note', [
+                    'individu_id' => $individu->id_individu,
+                    'note_id' => $note->id_procedure,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
     }
 }
