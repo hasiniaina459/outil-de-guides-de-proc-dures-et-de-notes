@@ -12,11 +12,7 @@
     --text: #E2F0F8;
     --light: #FFFFFF;
     --dark-color: #2c3e50;
-    --btn1: #211547;
-    --btn2: #4517CF;
     --btn3: #4c4c4f;
-    --btn4: #5a4f4f;
-    --btn5: #161028;
     --success: #28a745;
     --error: #dc3545;
 
@@ -57,7 +53,7 @@ header nav a:hover{
     text-decoration: dashed;
     background-color: rgba(0, 0, 0, 0.19);
     color: var(--light);
-    border: 2px inset whitesmoke;
+    border: 1px solid whitesmoke;
 }
 a{
     color: var(--light);
@@ -124,11 +120,12 @@ label {
 button{
     background-color: var(--btn3);
     padding: 10px 10px;
+    transition: all 0.5s ease-in-out;
 }
 button:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
 
 input[type="text"],
@@ -161,6 +158,7 @@ select {
 .retour a:hover{
     background-color: var(--light);
     color: var(--btn3);
+    border: 2px solid var(--btn3);
 }
 .champ{
     display: flex;
@@ -177,58 +175,63 @@ select::focus{
 }
 .btn-create {
     background-color: var(--btn3);
+    transition: all 0.5s ease-in-out;
 }
 .btn-create:hover{
     background-color: var(--light);
-        color: var(--btn3);
-        border: 2px inset var(--btn3);
+    color: var(--btn3);
+    border: 2px solid var(--btn3);
 }
 
 
 
 .btn-edit {
+    transition: all 0.5s ease-in-out;
     background-color: var(--btn3);
 }
 .btn-edit:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
 
 .btn-delete {
+    transition: all 0.5s ease-in-out;
     background-color: var(--btn3);
     color: var(--light);
 }
 .btn-delete:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
 
 .btn-show {
+    transition: all 0.5s ease-in-out;
     background-color: var(--btn3);
 }
 .btn-show:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
 .btn-download{
+    transition: all 0.5s ease-in-out;
     background-color: var(--btn3);
 }
 .btn-download:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
-
 .btn-index {
+    transition: all 0.5s ease-in-out;
     background-color: var(--btn3);
 }
 .btn-index:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);   
 }
 
 form.inline {
@@ -268,6 +271,7 @@ form.inline {
 @media ( max-width:638px) {
     header nav .menu .menubar{
         display: block;
+        width: 30px;
     }
     header nav .element{
         display: none;
@@ -275,8 +279,17 @@ form.inline {
     header nav .element.open{
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
+        align-items: start;
+        margin: 15px 15px;
+    }
+    table{
+        display: block;
+        overflow-x: auto;
+        width: max-content;
+        -webkit-overflow-scrolling: touch;
+        cursor: grab;
+        white-space: nowrap;
+        max-width: 100%;
     }
 
 }

@@ -20,7 +20,7 @@
     <header>
         <nav>
             <div class="menu">
-                <a href="#" class="menubar" id="menu" onclick="showbar()">
+                <a href="#" class="menubar" id="menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16"
                         fill="currentColor" viewBox="0 0 20 20">
                         <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
