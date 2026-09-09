@@ -46,8 +46,7 @@
         <div>
             <label for="notif_preference">Préférences de notification:</label>
             <input type="checkbox" name="notif_preference[]" value="email" {{ (is_array(old('notif_preference')) && in_array('email', old('notif_preference'))) ? 'checked' : '' }}> Email
-            <input type="checkbox" name="notif_preference[]" value="sms" {{ (is_array(old('notif_preference')) && in_array('sms', old('notif_preference'))) ? 'checked' : '' }}> SMS
-            <input type="checkbox" name="notif_preference[]" value="whatsapp" {{ (is_array(old('notif_preference')) && in_array('whatsapp', old('notif_preference'))) ? 'checked' : '' }}> WhatsApp
+            <input type="checkbox" name="notif_preference[]" value="application" {{ (is_array(old('notif_preference')) && in_array('application', old('notif_preference'))) ? 'checked' : '' }}> application
             @error('notif_preference')
                 <div class="error">{{ $message }}</div>
             @enderror

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'rappels')
 @section('content')
-<h1>rappels</h1>
+<h1>Rappels</h1>
 <p>This is the rappels index page.</p>
 
 <a href="{{ route('rappels.create') }}" class="btn-create">Create</a>
@@ -37,7 +37,7 @@
                         <path d="M7 13v3c0 .55.45 1 1 1h3c.27 0 .52-.11.71-.29l9-9a.996.996 0 0 0 0-1.41l-3-3a.996.996 0 0 0-1.41 0l-9.01 8.99A1 1 0 0 0 7 13m10-7.59L18.59 7 17.5 8.09 15.91 6.5zm-8 8 5.5-5.5 1.59 1.59-5.5 5.5H9z"></path>
                     </svg>
                 </a>
-                <form action="{{ route('rappels.destroy', $rappel->id_rappel) }}" method="POST" style="display: inline-block;">
+                <form action="{{ route('rappels.destroy', $rappel->id_rappel) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn-delete">

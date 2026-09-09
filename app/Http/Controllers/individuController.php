@@ -14,6 +14,7 @@ class individuController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $individus = individu::with('service')->get();
@@ -39,10 +40,10 @@ class individuController extends Controller
             ['name' => 'required|string|max:50',
             'firstname' => 'nullable|string|max:100',
             'phone' => 'nullable|string',
-            'email' => 'nullable|string',
+            'email' => 'required|string|unique:individu,email',
             'address' => 'required|string|max:100',
             'notif_preference' => 'required|array|min:1',
-            'notif_preference.*' => 'in:email,sms,whatsapp',
+            'notif_preference.*' => 'in:email,application',
             'password' => 'required|string|min:8|confirmed',
             'id_service'=>'required|exists:service,id_service'
             ]
@@ -81,11 +82,11 @@ class individuController extends Controller
                 'name' => 'required|string|max:50',
                 'firstname' => 'nullable|string|max:100',
                 'phone' => 'nullable|string',
-                'email' => 'nullable|string',
+                'email' => 'required|string|unique:individu,email',
                 'notif_preference' => 'required|array|min:1',
-                'notif_preference.*' => 'in:email,sms,whatsapp',
+                'notif_preference.*' => 'in:email,application',
                 'address' => 'required|string|max:100',
-                'password' => 'required|string|min:8|confirmed',
+                'password' => 'nullable|string|min:8|confirmed',
                 'id_service' => 'required|exists:service,id_service'
             ]
         );

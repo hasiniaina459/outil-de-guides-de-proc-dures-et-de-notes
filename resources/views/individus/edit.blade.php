@@ -46,22 +46,21 @@
     <div>
         <label for="notif_preference">Préférences de notification:</label>
         <input type="checkbox" name="notif_preference[]" value="email" {{ (is_array(old('notif_preference')) && in_array('email', old('notif_preference'))) ? 'checked' : '' }}> Email
-        <input type="checkbox" name="notif_preference[]" value="sms" {{ (is_array(old('notif_preference')) && in_array('sms', old('notif_preference'))) ? 'checked' : '' }}> SMS
-        <input type="checkbox" name="notif_preference[]" value="whatsapp" {{ (is_array(old('notif_preference')) && in_array('whatsapp', old('notif_preference'))) ? 'checked' : '' }}> WhatsApp
+        <input type="checkbox" name="notif_preference[]" value="application" {{ (is_array(old('notif_preference')) && in_array('application', old('notif_preference'))) ? 'checked' : '' }}> application
         @error('notif_preference')
             <div class="error">{{ $message }}</div>
         @enderror
     </div>
     <div>
         <label for="password">Mot de passe:</label>
-        <input type="password" name="password" id="password" placeholder="Entrez le mot de passe de l'individu" required>
+        <input type="password" name="password" id="password" placeholder="Entrez le mot de passe de l'individu">
         @error('password')
         <div class="error">{{ $message }}</div>
         @enderror
     </div>
     <div>
         <label for="address">Adresse:</label>
-        <input type="text" name="address" id="address" value="{{ old('address', $individus->address) }}" placeholder="Entrez l'adresse de l'individu" required>
+        <input type="text" name="address" id="address" value="{{ old('address', $individus->address) }}" placeholder="Entrez l'adresse de l'individu">
         @error('address')
         <div class="error">{{ $message }}</div>
         @enderror
