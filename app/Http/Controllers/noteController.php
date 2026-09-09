@@ -38,6 +38,8 @@ class noteController extends Controller
             [
                 'note_title'=>'required|string|max:100',
                 'content'=>'required|string|max:255',
+                'categorie'=> 'required|array|min:1',
+                'categorie.*'=>'in:en_cours,nouvelle,termine',
                 'service'=>'required|array|min:1',
                 'service.*'=>'exists:service,id_service'
             ]
@@ -48,24 +50,7 @@ class noteController extends Controller
         $note->services()->attach($validate['service']);
 
         $note->load('services.individus');
-        $individus = $note->services->flatMap(function ($service) {
-            return $service->individus;
-        })->unique('id_individu')
-            ->filter(function ($individu) {
-                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
-            });
-
-        foreach ($individus as $individu) {
-            try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($note));
-            } catch (\Throwable $e) {
-                Log::error('Échec envoi email note', [
-                    'individu_id' => $individu->id_individu,
-                    'note_id' => $note->id_note,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
+        $note->notifyvalid();
         return redirect()->route('notes.index')->with('success','note créée');
     }
 
@@ -105,24 +90,7 @@ class noteController extends Controller
         $validate['note_status'] = $request->boolean('note_status', false);
         $notes->update($validate);
         $notes->services()->sync($validate['service']);
-        $individus = $notes->services->flatMap(function ($service) {
-            return $service->individus;
-        })->unique('id_individu')
-            ->filter(function ($individu) {
-                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
-            });
-
-        foreach ($individus as $individu) {
-            try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($notes));
-            } catch (\Throwable $e) {
-                Log::error('Échec envoi email note', [
-                    'individu_id' => $individu->id_individu,
-                    'note_id' => $notes->id_note,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
+        $notes->notifyvalid();
         return redirect()->route('notes.index')->with('success', 'note modifié');
     }
 

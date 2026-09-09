@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "geological";
+    src: url("geological.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --fond: #0C161D;
+    --secondary: #1E4B67;
+    --accent: #1E5E85;
+    --text: #E2F0F8;
+    --light: #FFFFFF;
+    --dark-color: #2c3e50;
+    --btn3: #4c4c4f;
+    --success: #28a745;
+    --error: #dc3545;
+
+    --font-display: "Geological", "Playfair Display", serif;
+    --font-body: "Jost", "Segoe UI", sans-serif;
+}
+body{
+    background-color: var(--fond);
+    font-family: var(--font-display);
+}
+h1{
+    color: var(--secondary);
+}

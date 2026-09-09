@@ -45,10 +45,11 @@
     </div>
     <div>
         <label for="notif_preference">Préférences de notification:</label>
-        <input type="checkbox" name="notif_preference[]" value="email" {{ (is_array(old('notif_preference')) && in_array('email', old('notif_preference'))) ? 'checked' : '' }}> Email
-        <input type="checkbox" name="notif_preference[]" value="application" {{ (is_array(old('notif_preference')) && in_array('application', old('notif_preference'))) ? 'checked' : '' }}> application
+        <input type="checkbox" name="notif_preference[]" value="en_cours" {{ (is_array(old('notif_preference')) && in_array('en_cours', old('notif_preference'))) ? 'checked' : '' }}> En cours
+        <input type="checkbox" name="notif_preference[]" value="nouvelle" {{ (is_array(old('notif_preference')) && in_array('nouvelle', old('notif_preference'))) ? 'checked' : '' }}> Nouvelle
+        <input type="checkbox" name="notif_preference[]" value="termine" {{ (is_array(old('notif_preference')) && in_array('termine', old('notif_preference'))) ? 'checked' : '' }}> termine
         @error('notif_preference')
-            <div class="error">{{ $message }}</div>
+        <div class="error">{{ $message }}</div>
         @enderror
     </div>
     <div>

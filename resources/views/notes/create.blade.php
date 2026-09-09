@@ -39,6 +39,13 @@
         @enderror
     </div>
     <div>
+        <label for="categorie">categorie</label>
+        <input type="checkbox" name="categorie[]" value="en_cours" {{ (is_array(old('categorie')) && in_array('en_cours', old('categorie'))) ? 'checked' : '' }}> En cours
+        <input type="checkbox" name="categorie[]" value="nouvelle" {{ (is_array(old('categorie')) && in_array('nouvelle', old('categorie'))) ? 'checked' : '' }}> Nouvelle
+        <input type="checkbox" name="categorie[]" value="termine" {{ (is_array(old('categorie')) && in_array('termine', old('categorie'))) ? 'checked' : '' }}> termine
+
+    </div>
+    <div>
         <label>Services concernés:</label>
         @foreach($services as $service)
         <div>

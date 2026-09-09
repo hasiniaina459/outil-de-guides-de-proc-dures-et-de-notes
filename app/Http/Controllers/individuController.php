@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\individu;
 use App\Models\service;
 use App\Models\note;
@@ -43,7 +44,7 @@ class individuController extends Controller
             'email' => 'required|string|unique:individu,email',
             'address' => 'required|string|max:100',
             'notif_preference' => 'required|array|min:1',
-            'notif_preference.*' => 'in:email,application',
+            'notif_preference.*' => 'in:en_cours,nouvelle,termine',
             'password' => 'required|string|min:8|confirmed',
             'id_service'=>'required|exists:service,id_service'
             ]
@@ -84,7 +85,7 @@ class individuController extends Controller
                 'phone' => 'nullable|string',
                 'email' => 'required|string|unique:individu,email',
                 'notif_preference' => 'required|array|min:1',
-                'notif_preference.*' => 'in:email,application',
+                'notif_preference.*' => 'in:en_cours,nouvelle,termine',
                 'address' => 'required|string|max:100',
                 'password' => 'nullable|string|min:8|confirmed',
                 'id_service' => 'required|exists:service,id_service'

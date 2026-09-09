@@ -58,7 +58,7 @@ class procedureController extends Controller
         ]);
         $note->services()->attach($validate['service']);
         $note->load('services.individus');
-        $this->sendNoteEmails($note);
+        $note->notifyvalid();
         return redirect()->route('procedures.index')->with('success','procedure créée avec succés');
     }
 
@@ -109,8 +109,8 @@ class procedureController extends Controller
                 'rappel_create' => false,
             ]);
             $note->services()->sync($validate['service']);
-            $this->sendNoteEmails($note);
-        }    
+            $note->notesvalid();
+            }    
         return redirect()->route('procedures.index')->with('success', 'procedure modifié avec succés');
     }
 

@@ -32,12 +32,31 @@ html {
     scroll-behavior: smooth;
 }
 header {
-    background: var(--secondary);
+    background-color: var(--secondary);
     border-bottom: var(--accent) 3px solid;
     padding: 15px 15px;
     position:sticky;
     top: 0;
     z-index: 700;
+}
+#navigation{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+#navigation form{
+    margin-left: auto;
+    margin-top: 3px;
+    display: flex;
+}
+#navigation button{
+    background-color: var(--secondary);
+    color: var(--text);
+}
+#navigation button:hover{
+    background-color: var(--text);
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
 }
 
 header nav a {
@@ -53,7 +72,7 @@ header nav a.menubar{
 }
 
 header nav a:hover{
-    width: 100%;
+    width: 70px;
     font-family: var(--font-body);
     text-decoration: dashed;
     background-color: rgba(0, 0, 0, 0.19);
@@ -275,7 +294,7 @@ form.inline {
     color: var(--error);
     font-size: 13px;
 }
-@media ( max-width:638px) {
+@media ( max-width:660px) {
     header nav .menu .menubar{
         display: block;
         width: 30px;
@@ -292,6 +311,14 @@ form.inline {
     }
     header nav .element.open:hover{
         border: 1px solid whitesmoke;
+    }
+    #navigation{
+        flex-direction: column;
+        align-items: flex-start;
+        display: none;
+    }
+    #navigation.open{
+        display: flex;
     }
     table{
         display: block;

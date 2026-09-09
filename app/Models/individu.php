@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User as authentificatable;
+use Illuminate\Notifications\Notifiable;
 
-class individu extends Model
+class individu extends authentificatable
 {
+    use Notifiable;
     protected $table='individu';
     protected $primaryKey='id_individu';
     protected $fillable=['name','firstname','phone','email','address','id_service','notif_preference','password'];

@@ -34,6 +34,10 @@
                 <a href="{{ route('procedures.index') }}">Procedures</a>
                 <a href="{{ route('notes.index') }}">Notes</a>
                 <a href="{{ route('rappels.index') }}">Rappels</a>
+                <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="logout-link">déconnexion</button>
+                </form>
             </div>
         </nav>
     </header>

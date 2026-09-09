@@ -14,7 +14,8 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
+    
+    
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
@@ -36,13 +37,17 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'individu' => [
+            'driver' => 'session',
+            'provider' => 'individus',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -60,18 +65,17 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'individus' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\individu::class,
+        ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
