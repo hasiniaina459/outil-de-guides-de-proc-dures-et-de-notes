@@ -13,17 +13,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewNoteNotification extends Mailable implements ShouldQueue
+class RappelNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-
-    public note $note;
+    public rappel $rappel;
     public individu $individu;
-
-    public function __construct(note $note,individu $individu)
+    /**create a new message instance.
+     */
+    public function __construct(rappel $rappel,individu $individu)
     {
-        $this->note = $note;
-        $this->individu = $individu;
+        $this->rappel=$rappel;
+        $this->individu=$individu;
     }
 
     /**
@@ -32,7 +32,7 @@ class NewNoteNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nouvelle note' . $this->note->note_title,
+            subject: 'Rappel Notification' . $this->rappel->remind_title,
         );
     }
 
@@ -42,7 +42,7 @@ class NewNoteNotification extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.new-note',
+            view: 'emails.rappel',
         );
     }
 

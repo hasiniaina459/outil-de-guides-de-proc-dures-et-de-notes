@@ -13,14 +13,22 @@
     <h1>Liste des individus</h1>
 </div>
 <div class="champ">
-    <a href="{{ route('individus.download', $individus->id_individu) }}" class="btn-download">Télécharger en PDF</a>
-    <button type="button" onclick="window.print()" class="btn-show">
+    <a href="{{ route('individus.download', $individus->id_individu) }}" class="btn-download">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            fill="currentColor" viewBox="-1 2 22 28">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M4 18h16v2H4zm7-15v7H7l5 6 5-6h-4V3z"></path>
+        </svg>
+        <span>telecharger</span>
+    </a>
+    <button type="button" onclick="window.print()" class="btn-print">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             fill="currentColor" viewBox="0 0 24 24">
             <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
             <path d="M19 7h-1V2H6v5H5c-1.65 0-3 1.35-3 3v7c0 1.1.9 2 2 2h2v3h12v-3h2c1.1 0 2-.9 2-2v-7c0-1.65-1.35-3-3-3M8 4h8v3H8zm8 16H8v-4h8zm4-3h-2v-3H6v3H4v-7c0-.55.45-1 1-1h14c.55 0 1 .45 1 1z"></path>
             <path d="M14 11h4v1h-4z"></path>
-        </svg>imprimer
+        </svg>
+        <p class="text">imprimer</p>
     </button>
 </div>
 <p><strong>Nom:</strong> {{ $individus->name }}</p>

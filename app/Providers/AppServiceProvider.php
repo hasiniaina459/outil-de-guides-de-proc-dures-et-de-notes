@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // $this->app['view']->addNamespace('mail', resource_path('views/vendor/mail'));
+        $this->app->make('view')->addNamespace('mail',resource_path('views/vendor/mail/html'));
     }
 }

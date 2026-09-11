@@ -50,8 +50,9 @@ class procedureController extends Controller
         $procedures->services()->attach($validate['service']);
         $note = note::create([
             'note_title' => 'Note for procedure: ' . $validate['procedure_title'],
-            'content' => 'This is a note associated with the procedure: ' . $validate['procedure_title'],
+            'content' => 'Description: ' . $validate['description'],
             'note_date' => now(),
+            'categorie' => ['nouvelle'],
             'note_status' => false,
             'rappel_create' => false,
             'id_procedure' => $procedures->id_procedure,
@@ -105,11 +106,12 @@ class procedureController extends Controller
                 'note_title' => 'Note for procedure: ' . $validate['procedure_title'],
                 'content' => 'This is a note associated with the procedure: ' . $validate['procedure_title'],
                 'note_date' => now(),
+                'categorie' => ['nouvelle'],
                 'note_status' => false,
                 'rappel_create' => false,
             ]);
             $note->services()->sync($validate['service']);
-            $note->notesvalid();
+            $note->notifyvalid();
             }    
         return redirect()->route('procedures.index')->with('success', 'procedure modifié avec succés');
     }
@@ -117,9 +119,9 @@ class procedureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(note $note)
+    public function destroy(procedure $procedures)
     {
-        $note->delete();
+        $procedures->delete();
         return redirect()->route('procedures.index')->with('success', 'procedure supprimé avec succés');
     }
     public function sendNoteEmails(note $note):void
@@ -133,7 +135,7 @@ class procedureController extends Controller
             });
         foreach ($individus as $individu) {
             try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($note));
+                Mail::to($individu->email)->queue(new NewNoteNotification($note,$individu));
             } catch (\Throwable $e) {
                 Log::error('Échec envoi email note', [
                     'individu_id' => $individu->id_individu,

@@ -23,24 +23,24 @@
         @enderror
     </div>
     <div>
-        <label for="remind_date">Date:</label>
-        <input type="date" name="remind_date" id="remind_date" value="{{ old('remind_date', $rappels->remind_date) }}" required>
-        @error('remind_date')
-        <div class="error">{{ $message }}</div>
-        @enderror
-    </div>
-    <div>
-        <label for="id_individu">individu</label>
+        <label for="id_individu">destinataire</label>
         @foreach($individus as $individu)
         <div>
             <input type="checkbox" name="individu[]" value="{{ $individu->id_individu }}" id="individu_{{ $individu->id_individu }}"
-                {{ in_array($individu->id_individu, old('individu', $rappels->individus->pluck('id_individu')->toArray())) ? 'checked' : '' }}>
-            <label for="individu_{{ $individu->id_individu }}">{{ $individu->name }}</label>
+                {{ in_array($individu->id_individu, old('individu', $rappels->individus->pluck('id_individu')->toArray())) ? 'checked' : '' }}>{{ $individu->name }} {{ $individu->firstname}}
         </div>
         @endforeach
         @error('id_individu')
         <div class="error">{{ $message }}</div>
         @enderror
+    </div>
+    <div>
+        <label for="id_note">note:</label>
+        <select name="id_note" id="id_note">
+            @foreach($notes as $note)
+            <option value="{{ $note->id_note }}" {{ old('id_note') == $note->id_note ? 'selected' : '' }}>{{ $note->note_title }}</option>
+            @endforeach
+        </select>
     </div>
     <button type="submit">Mettre à jour la rappel</button>
 </form>

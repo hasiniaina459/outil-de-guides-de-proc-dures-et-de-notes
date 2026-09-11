@@ -62,6 +62,7 @@ header {
 header nav a {
     color: var(--text);
     letter-spacing: 0.05em;
+    align-items: center;
     margin-right: 15px 15px;
     height: 20px;
     gap: 10px;
@@ -75,6 +76,7 @@ header nav a:hover{
     width: 70px;
     font-family: var(--font-body);
     text-decoration: dashed;
+    width: 85px;
     background-color: rgba(0, 0, 0, 0.19);
     color: var(--light);
     border-radius: 45px;
@@ -101,7 +103,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    border-radius: 45px;
+    border-radius: 15px;
 }
 
 table th,
@@ -121,8 +123,10 @@ table td a, button{
     border-radius: 20%;
     display: flex;
     flex-direction: column;
-    margin: 4px 2px;
-    border-radius: 4px;
+    justify-content: center;
+    margin: 4px 7px;
+    align-items: center;
+    border-radius: 18px;
     text-decoration: none;
     background-color: #fff;
     border: none;
@@ -151,7 +155,7 @@ button{
 button:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 input[type="text"],
@@ -189,7 +193,6 @@ select {
 .champ{
     display: flex;
     flex-direction: row;
-    justify-content: center;    
 }
 
 input[type="text"],
@@ -206,35 +209,51 @@ select::focus{
 .btn-create:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 
 
 .btn-edit {
     transition: all 0.5s ease-in-out;
+    margin: 1px 30%;
     background-color: var(--btn3);
 }
 .btn-edit:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 2px inset var(--btn3);
 }
 
 .btn-delete {
     transition: all 0.5s ease-in-out;
+    margin: 1px 30%;
     background-color: var(--btn3);
     color: var(--light);
 }
 .btn-delete:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 2px inset var(--btn3);
+}
+.btn-show{
+    transition: all 0.5s ease-in-out;
+    margin: 1px 30%;
+    background-color: var(--btn3);
+    color: var(--light);
 }
 
-.btn-show {
+.btn-print {
     transition: all 0.5s ease-in-out;
+    text-align: center;
+    margin-top: 9px;
+    border-radius: 25px;
+    align-items: center;
+    height: 35px;
     background-color: var(--btn3);
+}
+.btn-print svg{
+    display: none;
 }
 .btn-show:hover{
     background-color: var(--light);
@@ -243,7 +262,14 @@ select::focus{
 }
 .btn-download{
     transition: all 0.5s ease-in-out;
+    border-radius: 45px;
+    text-align: center;
+    bottom: 6px;
+    height: 22px;
     background-color: var(--btn3);
+}
+.btn-download svg{
+    display: none;
 }
 .btn-download:hover {
     background-color: var(--light);
@@ -289,7 +315,6 @@ form.inline {
     padding: 8px;
     box-sizing: border-box;
 }
-
 .error {
     color: var(--error);
     font-size: 13px;
@@ -317,6 +342,10 @@ form.inline {
         align-items: flex-start;
         display: none;
     }
+    .lougout-form{
+        margin-left: 0%;
+        margin-right: auto;
+    }
     #navigation.open{
         display: flex;
     }
@@ -329,5 +358,31 @@ form.inline {
         white-space: nowrap;
         max-width: 100%;
     }
-
+    .champ{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .btn-download svg{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-download{
+        margin-bottom: 3px;
+        margin-top: 9px;
+        text-align: center;
+        align-items: center;
+        width: 28px;
+        height: 16px;
+    }
+    .btn-download span{
+        display: none;
+    }
+    .btn-print .text{
+        display: none;
+    }
+    .btn-print svg{
+        display: block;
+    }
 }

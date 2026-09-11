@@ -39,7 +39,7 @@ class noteController extends Controller
                 'note_title'=>'required|string|max:100',
                 'content'=>'required|string|max:255',
                 'categorie'=> 'required|array|min:1',
-                'categorie.*'=>'in:en_cours,nouvelle,termine',
+                'categorie.*'=>'in:information,nouvelle,termine',
                 'service'=>'required|array|min:1',
                 'service.*'=>'exists:service,id_service'
             ]
@@ -59,7 +59,7 @@ class noteController extends Controller
      */
     public function show(note $notes)
     {
-        $notes->load('services');
+        $notes->load('services','rappels');
         return view('notes.show',compact('notes'));
     }
 
@@ -69,7 +69,7 @@ class noteController extends Controller
     public function edit(note $notes)
     {
         $services=service::all();
-        $notes->load('services');
+        $notes->load('services','rappels');
         return view('notes.edit', compact('services','notes'));
     }
 
@@ -82,6 +82,8 @@ class noteController extends Controller
             [
                 'note_title' => 'required|string|max:100',
                 'content' => 'required|string|max:255',
+                'categorie' => 'required|array|min:1',
+                'categorie.*' => 'in:information,nouvelle,termine',
                 'service' => 'required|array|min:1',
                 'service.*' => 'exists:service,id_service'
             ]

@@ -20,10 +20,85 @@
     --font-display: "Geological", "Playfair Display", serif;
     --font-body: "Jost", "Segoe UI", sans-serif;
 }
-body{
+
+body {
     background-color: var(--fond);
     font-family: var(--font-display);
 }
-h1{
+
+form {
+    margin: 10% 30%;
+    padding: 2% 4%;
+    border-radius: 45px;
+    background-color: var(--light);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1 {
     color: var(--secondary);
+    margin-bottom: 25px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+label {
+    color: var(--dark-color);
+}
+
+form input {
+    border-radius: 25px;
+    border: 2px solid var(--dark-color);
+    height: 30px;
+    padding-right: 9px;
+    text-align: end;
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+.btn button {
+    border: 2px solid var(--dark-color);
+    height: 35px;
+    color: var(--light);
+    border-radius: 35px;
+    background-color: var(--btn3);
+    margin: 2% 2%;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn a {
+    border-radius: 35px;
+    border: 2px solid var(--dark-color);
+    background-color: var(--btn3);
+    margin: 2px 7px;
+    padding-top: 8px;
+    text-align: center;
+    color: var(--light);
+    text-decoration: none;
+    width: 75px;
+    height: 27px;
+}
+
+.btn button:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
+}
+
+.btn a:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px inset var(--btn3);
 }

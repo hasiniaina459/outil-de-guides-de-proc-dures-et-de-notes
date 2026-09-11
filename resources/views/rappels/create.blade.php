@@ -22,26 +22,27 @@
         @enderror
     </div>
     <div>
-        <label for="remind_date">Date:</label>
-        <input type="date" name="remind_date" id="remind_date" value="{{old('remind_date')}}" required>
-        @error('remind_date')
-        <div class="error">{{ $message }}</div>
-        @enderror
-    </div>
-    <div>
         <label for="id_individu">destinataire</label>
         <select name="individu[]" id="individu" multiple size="6" required>
             @foreach($individus as $individu)
-                <option value="{{ $individu->id_individu }}" 
+            <option value="{{ $individu->id_individu }}"
                 {{in_array($individu->id_individu, old('individu', [])) ? 'selected' : '' }}>{{ $individu->name }}</option>
             @endforeach
         </select>
         @error('individu')
-                <div class="error">{{ $message }}</div>
+        <div class="error">{{ $message }}</div>
         @enderror
         @error('individu.*')
-                <div class="error">{{ $message }}</div>
+        <div class="error">{{ $message }}</div>
         @enderror
+    </div>
+    <div>
+        <label for="id_note">note:</label>
+        <select name="id_note" id="id_note">
+            @foreach($notes as $note)
+            <option value="{{ $note->id_note }}" {{ old('id_note') == $note->id_note ? 'selected' : '' }}>{{ $note->note_title }}</option>
+            @endforeach
+        </select>
     </div>
     <button type="submit">Créer la note</button>
 </form>

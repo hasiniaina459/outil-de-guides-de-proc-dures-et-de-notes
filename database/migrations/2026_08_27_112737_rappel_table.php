@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('remind_title');
             $table->unsignedSmallInteger('remind_number');
             $table->timestamps();
+            $table->foreignId('id_note')
+                ->nullable()
+                ->constrained('note', 'id_note')
+                ->nullOnDelete();
+            $table->enum('source', ['manuel', 'auto'])
+                ->default('manuel');
         });
     }
 

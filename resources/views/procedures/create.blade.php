@@ -41,8 +41,7 @@
         @foreach($services as $service)
         <div>
             <input type="checkbox" name="service[]" value="{{ $service->id_service }}" id="service_{{ $service->id_service }}"
-                {{in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>
-            <label for="service_{{ $service->id_service }}">{{ $service->service_name }}</label>
+                {{in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>{{ $service->service_name }}
         </div>
         @endforeach
         @error('id_service')

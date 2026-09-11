@@ -9,17 +9,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Mail\NewNoteNotification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class note extends Model
 {
     protected $table='note';
     protected $primaryKey = 'id_note';
-    protected $fillable = ['note_title','content','note_status','categorie','note_date','rappel_create','id_procedure'];
+    protected $fillable = ['note_title','content','note_status','categorie', 'last_rappel_at','note_date','rappel_create','id_procedure'];
 
     protected function casts(): array
     {
         return [
             'note_date' => 'datetime',
+            'categorie'=>'array',
         ];
     }
     //ENVOYER:une note est envoye à au moin un service
@@ -31,17 +33,24 @@ class note extends Model
     {
         return $this->belongsTo(procedure::class,'id_procedure','id_procedure');
     }
+    public function rappels():HasMany
+    {
+        return $this->hasMany(rappel::class,'id_note','id_note');
+    }
 
     public function notifyvalid(): void
     {
         $this->load('services.individus');
         $individus = $this->services->flatMap(fn($service) => $service->individus)
             ->unique('id_individu')
-            ->filter(fn($individu) => in_array($this->category, $individu->notif_preference ?? []));
+            ->filter(fn($individu) => !empty(array_intersect(
+                (array) $this->categorie,
+                $individu->notif_preference ?? []
+            )));
 
         foreach ($individus as $individu) {
             try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($this));
+                Mail::to($individu->email)->queue(new NewNoteNotification($this,$individu));
             } catch (\Throwable $e) {
                 Log::error('Échec envoi email note', [
                     'individu_id' => $individu->id_individu,

@@ -44,13 +44,18 @@ class individuController extends Controller
             'email' => 'required|string|unique:individu,email',
             'address' => 'required|string|max:100',
             'notif_preference' => 'required|array|min:1',
-            'notif_preference.*' => 'in:en_cours,nouvelle,termine',
+            'notif_preference.*' => 'in:information,nouvelle,termine',
             'password' => 'required|string|min:8|confirmed',
             'id_service'=>'required|exists:service,id_service'
             ]
         );
         $validate['password'] = bcrypt($validate['password']);
         individu::create($validate);
+
+        if (!auth('individu')->check()) {
+            return redirect()->route('login')->with('success', 'Compte créé avec succès, vous pouvez vous connecter.');
+        }
+
         return redirect()->route('individus.index')->with('success', 'individu ajouté avec succès.');
     }
 
@@ -83,9 +88,9 @@ class individuController extends Controller
                 'name' => 'required|string|max:50',
                 'firstname' => 'nullable|string|max:100',
                 'phone' => 'nullable|string',
-                'email' => 'required|string|unique:individu,email',
+                'email' => 'required|string',
                 'notif_preference' => 'required|array|min:1',
-                'notif_preference.*' => 'in:en_cours,nouvelle,termine',
+                'notif_preference.*' => 'in:information,nouvelle,termine',
                 'address' => 'required|string|max:100',
                 'password' => 'nullable|string|min:8|confirmed',
                 'id_service' => 'required|exists:service,id_service'

@@ -11,6 +11,7 @@
             <th>title</th>
             <th>date</th>
             <th>remind number</th>
+            <th>moyen</th>
             <th>actions</th>
         </tr>
     </thead>
@@ -20,6 +21,13 @@
             <td>{{ $rappel->remind_title }}</td>
             <td>{{ $rappel->remind_date }}</td>
             <td>{{ $rappel->remind_number }}</td>
+            <td>
+                @if($rappel->source === 'auto')
+                    <span class="auto">auto</span>
+                @else
+                    <span class="manuel">Manuel</span>
+                @endif
+            </td>
             <td>
                 <a href="{{ route('rappels.show', $rappel->id_rappel) }}" class="btn-show">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

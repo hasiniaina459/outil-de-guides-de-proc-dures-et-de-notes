@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('content');
             $table->boolean('note_status');
             $table->string('categorie');
+            $table->timestamp('last_rappel_at')->nullable();
             $table->timestamp('note_date');
             $table->timestamps();
             $table->boolean('rappel_create')->default(0);

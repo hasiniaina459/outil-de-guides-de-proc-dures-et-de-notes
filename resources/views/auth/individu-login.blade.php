@@ -12,18 +12,24 @@
     <form method="POST" action="{{route('login')}}">
         @csrf
         <h1>login</h1>
-        <Label>Email</Label>
-        <input type="email" name="email" value="{{old('email')}}" required>
-        @error('email')
+        <div>
+            <Label>Email</Label>
+            <input type="email" name="email" value="{{old('email')}}" required>
+            @error('email')
             <p>{{$message}}</p>
-        @enderror
-        <label>Mot de passe</label>
-        <input type="password" name="password" required>
-        @error('password')
+            @enderror
+        </div>
+        <div>
+            <label>password</label>
+            <input type="password" name="password" required>
+            @error('password')
             <p>{{$message}}</p>
-        @enderror
-        <a href="{{route('individus.create')}}">créer</a>
-        <button type="submit">connexion</button>
+            @enderror
+        </div>
+        <div class="btn">
+            <button type="submit">connexion</button>
+            <a href="{{route('register')}}">créer</a>
+        </div>
     </form>
 </body>
 

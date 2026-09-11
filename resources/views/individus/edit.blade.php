@@ -45,7 +45,7 @@
     </div>
     <div>
         <label for="notif_preference">Préférences de notification:</label>
-        <input type="checkbox" name="notif_preference[]" value="en_cours" {{ (is_array(old('notif_preference')) && in_array('en_cours', old('notif_preference'))) ? 'checked' : '' }}> En cours
+        <input type="checkbox" name="notif_preference[]" value="information" {{ (is_array(old('notif_preference')) && in_array('information', old('notif_preference'))) ? 'checked' : '' }}> information
         <input type="checkbox" name="notif_preference[]" value="nouvelle" {{ (is_array(old('notif_preference')) && in_array('nouvelle', old('notif_preference'))) ? 'checked' : '' }}> Nouvelle
         <input type="checkbox" name="notif_preference[]" value="termine" {{ (is_array(old('notif_preference')) && in_array('termine', old('notif_preference'))) ? 'checked' : '' }}> termine
         @error('notif_preference')
@@ -56,6 +56,13 @@
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" id="password" placeholder="Entrez le mot de passe de l'individu">
         @error('password')
+        <div class="error">{{ $message }}</div>
+        @enderror
+    </div>
+    <div>
+        <label for="password_confirmation">Confirmer le mot de passe:</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirmez le mot de passe" required>
+        @error('password_confirmation')
         <div class="error">{{ $message }}</div>
         @enderror
     </div>

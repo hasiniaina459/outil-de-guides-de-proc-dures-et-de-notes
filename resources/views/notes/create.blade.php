@@ -40,18 +40,19 @@
     </div>
     <div>
         <label for="categorie">categorie</label>
-        <input type="checkbox" name="categorie[]" value="en_cours" {{ (is_array(old('categorie')) && in_array('en_cours', old('categorie'))) ? 'checked' : '' }}> En cours
+        <input type="checkbox" name="categorie[]" value="information" {{ (is_array(old('categorie')) && in_array('information', old('categorie'))) ? 'checked' : '' }}> information
         <input type="checkbox" name="categorie[]" value="nouvelle" {{ (is_array(old('categorie')) && in_array('nouvelle', old('categorie'))) ? 'checked' : '' }}> Nouvelle
         <input type="checkbox" name="categorie[]" value="termine" {{ (is_array(old('categorie')) && in_array('termine', old('categorie'))) ? 'checked' : '' }}> termine
-
+        @error('categorie')
+        {{$message}}
+        @enderror
     </div>
     <div>
         <label>Services concernés:</label>
         @foreach($services as $service)
         <div>
             <input type="checkbox" name="service[]" id="service_{{ $service->id_service }}" value="{{ $service->id_service }}"
-                {{ in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>
-            <label for="service_{{ $service->id_service }}">{{ $service->service_name }}</label>
+                {{ in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>{{ $service->service_name }}
         </div>
         @endforeach
         @error('service')
