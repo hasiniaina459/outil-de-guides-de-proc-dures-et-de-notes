@@ -12,18 +12,31 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class RappelNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public rappel $rappel;
     public individu $individu;
+    public string $trackUrl;
+    public string $noteUrl;
     /**create a new message instance.
      */
     public function __construct(rappel $rappel,individu $individu)
     {
         $this->rappel=$rappel;
         $this->individu=$individu;
+        $this->trackUrl = $rappel->notes
+            ? URL::signedRoute('notes.track',[
+            'note'=>$rappel->notes->id_note,
+            'individu'=>$individu->id_individu,
+        ])
+        : null;
+
+        $this->noteUrl = $rappel->notes
+            ? route('notes.show',$rappel->notes->id_note)
+            : null;
     }
 
     /**
@@ -32,7 +45,7 @@ class RappelNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel Notification' . $this->rappel->remind_title,
+            subject: 'Rappel : ' . $this->rappel->remind_title,
         );
     }
 

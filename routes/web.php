@@ -6,15 +6,8 @@ use App\Http\Controllers\individuController;
 use App\Http\Controllers\procedureController;
 use App\Http\Controllers\noteController;
 use App\Http\Controllers\rappelController;
-use App\Http\Controllers\noteTrackingController;
-use App\Http\Controllers\Auth\IndividuAuthController;
-/*
 use App\Http\Controllers\NoteTrackingController;
-
-Route::get('/track/note/{note}/{individu}', [NoteTrackingController::class, 'track'])
-    ->name('notes.track')
-    ->middleware('signed');
-*/
+use App\Http\Controllers\Auth\IndividuAuthController;
 
 Route::middleware('guest:individu')->group(function(){
     Route::get('/login',[IndividuAuthController::class,'showloginform'])->name('login');
@@ -23,9 +16,11 @@ Route::middleware('guest:individu')->group(function(){
     Route::get('/register', [individuController::class, 'create'])->name('register');
     Route::post('/register', [individuController::class, 'store'])->name('register.store');
 });
-Route::get('track/note/{note}/{individu}', [noteTrackingController::class, 'track'])
+
+Route::get('track/note/{note}/{individu}', [NoteTrackingController::class, 'track'])
     ->name('notes.track')
     ->middleware('signed');
+
 Route::middleware('auth:individu')->group(function(){
     Route::post('/logout',[IndividuAuthController::class,'logout'])->name('logout');
         

@@ -58,13 +58,15 @@ header {
     color: var(--secondary);
     border: 1px solid var(--secondary);
 }
-
+header nav{align-items: center;}
 header nav a {
+    display: flex;
+    justify-content: center;
     color: var(--text);
-    letter-spacing: 0.05em;
     align-items: center;
-    margin-right: 15px 15px;
-    height: 20px;
+    padding: 7px 6px;
+    width: 80px;
+    height: 35px;
     gap: 10px;
     text-decoration: none;
 }
@@ -73,22 +75,16 @@ header nav a.menubar{
 }
 
 header nav a:hover{
-    width: 70px;
     font-family: var(--font-body);
     text-decoration: dashed;
-    width: 85px;
     background-color: rgba(0, 0, 0, 0.19);
     color: var(--light);
     border-radius: 45px;
     border: 1px solid whitesmoke;
 }
-a{
-    color: var(--light);
-    gap: 10px;
-    text-decoration: none;
-    padding: 10px 10px;
-    border-radius: 10%;
-    margin: 4px 4px;
+header #logout-form{
+    border-radius: 25px;
+    
 }
 
 main {
@@ -98,7 +94,7 @@ main {
     padding: 25px;
     border-radius: 6px;
 }
-
+/*tableau*/
 table {
     width: 100%;
     border-collapse: collapse;
@@ -110,6 +106,7 @@ table th,
 table td {
     border: 1px solid darkgray;
     padding: 8px 10px;
+    align-items: center;
     text-align: center;
 }
 
@@ -118,28 +115,27 @@ table th {
 }
 
 
-table td a, button{
-    gap: 10px;
-    border-radius: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 4px 7px;
+table td a,table td button{
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     border-radius: 18px;
     text-decoration: none;
-    background-color: #fff;
+    background-color: var(--btn3);
     border: none;
     color: var(--light);
     cursor: pointer;
+    margin: 0 3px;
+    padding: 0;
 }
-table td a{
-    width: 30px;
-    height: 30px;
-}
-table td button{
-    width: 50px;
-    height: 50px;
+
+table td a:hover,
+table td button:hover {
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 2px solid var(--btn3);
 }
 label {
     display: block;
@@ -147,9 +143,11 @@ label {
     font-weight: bold;
     font-family: var(--font-body);
 }
+
 button{
     background-color: var(--btn3);
     padding: 10px 10px;
+    margin: 10px 10px;
     transition: all 0.5s ease-in-out;
 }
 button:hover{
@@ -157,6 +155,7 @@ button:hover{
     color: var(--btn3);
     border: 2px inset var(--btn3);
 }
+
 
 input[type="text"],
 input[type="email"],
@@ -167,14 +166,55 @@ select {
     padding: 8px;
     box-sizing: border-box;
 }
+/*parti checkbox*/
+.chip-grp{
+    display: flex;
+    flex-wrap: wrap;
+}
+.chip-inp{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.chip-lab{
+    display: inline-flex;
+    padding: 8px 14px;
+    align-items: center;
+    color: var(--text);
+    background-color: var(--accent);
+    border-radius: 35px;
+    user-select: none;
+    border: 2px solid var(--text);
+    transition: all 0.5s ease-in-out;
+}
+.chip-lab:hover{
+    border: 2px solid var(--accent);
+    background-color: var(--text);
+    color: var(--accent);
+} 
+.chip-inp:checked + .chip-lab{
+    border: 2px solid var(--accent);
+    background-color: var(--text);
+    color: var(--accent);
+}
+
+.chip-inp:focus-visible +.chip-lab{
+    border: 2px solid var(--accent);
+    background-color: var(--text);
+    color: var(--accent);
+}
+/*button retour*/
 .retour{
     background-color: var(--btn3);
     font-family: var(--font-body);
     color: var(--light);
-    padding: 6px 12px;
+    width: auto;
+    height: auto;
     border-radius: 4px;
     text-decoration: none;
     display: flex;
+    gap: 15px;
     flex-direction: row;
     align-items: center;
     margin-bottom: 15px;
@@ -182,109 +222,33 @@ select {
 .retour a{
     color: var(--light);
     text-decoration: none;
-    border-radius: 100%;
-    transition: all 0.3s ease;
+    margin-left: 20px;
+    padding: 4px 10px;
+    border-radius: 25px;
+    transition: all 0.5s ease;
 }
 .retour a:hover{
     background-color: var(--light);
     color: var(--btn3);
     border: 2px solid var(--btn3);
 }
-.champ{
-    display: flex;
-    flex-direction: row;
-}
+/*parti de show*/
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea,
-select::focus{
-    border: 1px solid var(--fond);
-}
+/*button telecharge*/
+
+/*button chemin vers formulaire de creation*/
 .btn-create {
-    background-color: var(--btn3);
-    transition: all 0.5s ease-in-out;
-}
-.btn-create:hover{
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px inset var(--btn3);
-}
-
-
-
-.btn-edit {
-    transition: all 0.5s ease-in-out;
-    margin: 1px 30%;
-    background-color: var(--btn3);
-}
-.btn-edit:hover {
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px inset var(--btn3);
-}
-
-.btn-delete {
-    transition: all 0.5s ease-in-out;
-    margin: 1px 30%;
-    background-color: var(--btn3);
+    text-decoration: none;
     color: var(--light);
-}
-.btn-delete:hover {
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px inset var(--btn3);
-}
-.btn-show{
-    transition: all 0.5s ease-in-out;
-    margin: 1px 30%;
     background-color: var(--btn3);
-    color: var(--light);
-}
-
-.btn-print {
-    transition: all 0.5s ease-in-out;
-    text-align: center;
-    margin-top: 9px;
+    width: auto;
     border-radius: 25px;
     align-items: center;
-    height: 35px;
-    background-color: var(--btn3);
-}
-.btn-print svg{
-    display: none;
-}
-.btn-show:hover{
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px solid var(--btn3);
-}
-.btn-download{
+    padding: 8px 12px;
     transition: all 0.5s ease-in-out;
-    border-radius: 45px;
-    text-align: center;
-    bottom: 6px;
-    height: 22px;
-    background-color: var(--btn3);
 }
-.btn-download svg{
-    display: none;
-}
-.btn-download:hover {
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px solid var(--btn3);
-}
-.btn-index {
-    transition: all 0.5s ease-in-out;
-    background-color: var(--btn3);
-}
-.btn-index:hover{
-    background-color: var(--light);
-    color: var(--btn3);
-    border: 2px solid var(--btn3);   
-}
+
+
 
 form.inline {
     display: inline;

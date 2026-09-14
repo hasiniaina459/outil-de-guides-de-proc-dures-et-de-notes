@@ -1,34 +1,34 @@
 @extends('layouts.app')
 @section('title', 'Modifier le service')
 @section('content')
-    <div class="retour">
-        <a href="{{ route('services.index') }}" class="btn-index">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                fill="currentColor" viewBox="0 0 24 24">
-                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                <path d="M15 11H8v2h7v4l6-5-6-5z"></path>
-                <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
-            </svg>
-        </a>
-        <h1>Modifier le service</h1>
-    </div>
-    <form action="{{ route('services.update', $services->id_service) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div>
-            <label for="service_name">Nom:</label>
-            <input type="text" name="service_name" id="service_name" value="{{ old('service_name', $services->service_name) }}" placeholder="Entrez le nom du service" required>
-            @error('service_name')
-            <div class="error">{{ $message }}</div>
-            @enderror
+        <div class="retour">
+            <a href="{{ route('services.index') }}" class="btn-index">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                    fill="currentColor" viewBox="0 0 24 24">
+                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                    <path d="M15 11H8v2h7v4l6-5-6-5z"></path>
+                    <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
+                </svg>
+            </a>
+            <h1>Modifier le service</h1>
         </div>
-        <div>
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" placeholder="Entrez la description du service" required>{{ old('description', $services->description) }}</textarea>
-            @error('description')
+        <form action="{{ route('services.update', $services->id_service) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div>
+                <label for="service_name">Nom:</label>
+                <input type="text" name="service_name" id="service_name" value="{{ old('service_name', $services->service_name) }}" placeholder="Entrez le nom du service" required>
+                @error('service_name')
                 <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
-        <button type="submit">Mettre à jour le service</button>
-    </form>
+                @enderror
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" placeholder="Entrez la description du service" required>{{ old('description', $services->description) }}</textarea>
+                @error('description')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
+            <button type="submit">Mettre à jour le service</button>
+        </form>
 @endsection

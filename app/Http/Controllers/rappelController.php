@@ -97,13 +97,13 @@ class rappelController extends Controller
     {
         $validate = $request->validate(
             [
-                'remind_date' => now(),
                 'remind_title' => 'required|string|max:100',
                 'individu' => 'required|array|min:1',
                 'individu.*' => 'exists:individu,id_individu',
                 'id_note' => 'nullable|exists:note,id_note',
             ]
         );
+        $validate['remind_date'] = now();
         $validate['remind_number'] = (rappel::max('remind_number') ?? 0) + 1;
         $rappels->update($validate);
         if (!empty($validate['id_note'])) {
