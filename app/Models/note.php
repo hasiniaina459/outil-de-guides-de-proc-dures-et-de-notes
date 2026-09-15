@@ -38,6 +38,16 @@ class note extends Model
         return $this->hasMany(rappel::class,'id_note','id_note');
     }
 
+    public function lecteurs():BelongsToMany
+    {
+        return $this->belongsToMany(individu::class,'lecteur','id_note','id_individu');
+    }
+
+    public function unreadLecteurs():BelongsToMany
+    {
+        return $this->lecteurs()->wherePivotNull('read_at');
+    }
+
     public function notifyvalid(): void
     {
         $this->load('services.individus');
@@ -47,8 +57,12 @@ class note extends Model
                 (array) $this->categorie,
                 $individu->notif_preference ?? []
             )));
+        $existingIds=$this->lecteurs()->pluck('id-individu');
 
         foreach ($individus as $individu) {
+            if(!in_array($individu->id_individu,$existingIds)){
+                $this->lecteurs()->attach($individu->id_individu,['read_at'=>null]);
+            }
             try {
                 Mail::to($individu->email)->queue(new NewNoteNotification($this,$individu));
             } catch (\Throwable $e) {

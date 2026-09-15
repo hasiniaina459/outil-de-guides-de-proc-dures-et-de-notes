@@ -10,17 +10,18 @@
     --secondary: #1E4B67;
     --accent: #1E5E85;
     --text: #E2F0F8;
-    --light: #FFFFFF;
+    --light: #FFFFFF; 
     --dark-color: #2c3e50;
     --btn3: #4c4c4f;
-    --success: #28a745;
-    --error: #dc3545;
-
+    --bgsuccess:#1F895D;
+    --bordersuccess: #206F4E;
+    --success: #D2F4E6;
+    --bgerror:#7F1015;
+    --bordererror:#5F1C1F;
+    --error: #F8E2E4;
     --font-display: "Geological", "Playfair Display", serif;
     --font-body: "Jost", "Segoe UI", sans-serif;
 }
-
-/*Sombre : #161028 Foncé : #211547 Accent : #4517CF Clair : #E4DEF7 Blanc : #FCFCFC*/
 body {
     font-family: var(--font-body);
     margin: 0;
@@ -52,24 +53,34 @@ header {
 #navigation button{
     background-color: var(--secondary);
     color: var(--text);
+    border-radius: 25px;
 }
 #navigation button:hover{
     background-color: var(--text);
     color: var(--secondary);
-    border: 1px solid var(--secondary);
+    border: 1px solid whitesmoke;
 }
-header nav{align-items: center;}
+header nav{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 header nav a {
     display: flex;
     justify-content: center;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid transparent;
     color: var(--text);
     align-items: center;
+    margin-top: 10px;
     padding: 7px 6px;
-    width: 80px;
-    height: 35px;
+    width: 85px;
+    height: 25px;
     gap: 10px;
     text-decoration: none;
 }
+
 header nav a.menubar{
     display: none;
 }
@@ -77,14 +88,15 @@ header nav a.menubar{
 header nav a:hover{
     font-family: var(--font-body);
     text-decoration: dashed;
-    background-color: rgba(0, 0, 0, 0.19);
-    color: var(--light);
-    border-radius: 45px;
+    background-color: var(--text);
+    color: var(--secondary);
     border: 1px solid whitesmoke;
+    border-radius: 45px;
 }
-header #logout-form{
-    border-radius: 25px;
-    
+header nav button{
+    border: 1px solid transparent;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
 }
 
 main {
@@ -124,7 +136,8 @@ table td a,table td button{
     border-radius: 18px;
     text-decoration: none;
     background-color: var(--btn3);
-    border: none;
+    border: 1px solid transparent;
+    transition: all 0.5s ease-in-out;
     color: var(--light);
     cursor: pointer;
     margin: 0 3px;
@@ -135,7 +148,7 @@ table td a:hover,
 table td button:hover {
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 1px solid var(--btn3);
 }
 label {
     display: block;
@@ -146,6 +159,11 @@ label {
 
 button{
     background-color: var(--btn3);
+    color: var(--light);
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    border-radius: 25px;
     padding: 10px 10px;
     margin: 10px 10px;
     transition: all 0.5s ease-in-out;
@@ -153,7 +171,7 @@ button{
 button:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px inset var(--btn3);
+    border: 2px solid var(--btn3);
 }
 
 
@@ -165,11 +183,15 @@ select {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+    border: 1px solid black;
+    text-align: right;
+    border-radius: 15px;
 }
 /*parti checkbox*/
 .chip-grp{
     display: flex;
     flex-wrap: wrap;
+    margin: 10px 10px;
 }
 .chip-inp{
     position: absolute;
@@ -204,6 +226,77 @@ select {
     background-color: var(--text);
     color: var(--accent);
 }
+/*parti radio*/
+.rd-grp {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 10px;
+}
+
+.rd-inp {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.rd-lab {
+    display: inline-flex;
+    margin: 2px 2px;
+    padding: 8px 14px;
+    align-items: center;
+    border-radius: 35px;
+    user-select: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.rd-lab.rd-ec{
+    background-color: var(--bgsuccess);
+    border: 2px solid var(--bordersuccess);
+    color: var(--success);
+}
+
+.rd-lab.rd-t{
+    background-color: var(--bgerror);
+    border: 2px solid var(--bordererror);
+    color: var(--error);
+}
+.rd-lab.rd-ec:hover{
+    border: 2px solid var(--bgsuccess);
+    background-color: var(--success);
+    color: var(--bordersuccess);
+}
+
+.rd-lab.rd-t:hover{
+    border: 2px solid var(--bgerror);
+    background-color: var(--error);
+    color: var(--bordererror);
+}
+
+.rd-inp:checked+.rd-lab.rd-ec{
+    border: 2px solid var(--bgsuccess);
+    background-color: var(--success);
+    color: var(--bordersuccess);
+}
+
+.rd-inp:checked+.rd-lab.rd-t {
+    border: 2px solid var(--bgerror);
+    background-color: var(--error);
+    color: var(--bordererror);
+}
+
+.rd-inp:focus-visible+.rd-lab.rd-ec{
+    border: 2px solid var(--bgsuccess);
+    background-color: var(--success);
+    color: var(--bordersuccess);
+}
+
+.rd-inp:focus-visible+.rd-lab.rd-t{
+    border: 2px solid var(--bgerror);
+    background-color: var(--error);
+    color: var(--bordererror);
+}
+
 /*button retour*/
 .retour{
     background-color: var(--btn3);
@@ -222,6 +315,7 @@ select {
 .retour a{
     color: var(--light);
     text-decoration: none;
+    border: 1px solid transparent;
     margin-left: 20px;
     padding: 4px 10px;
     border-radius: 25px;
@@ -230,11 +324,46 @@ select {
 .retour a:hover{
     background-color: var(--light);
     color: var(--btn3);
-    border: 2px solid var(--btn3);
+    border: 1px solid var(--btn3);
 }
 /*parti de show*/
+.champ{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+/*button imprime*/
+.btn-print{
+    transition: all 0.5s ease-in-out;
+    background-color: var(--btn3);
+    color: var(--light);
+    width: auto;
+    height: auto;
+    padding: 0 8px;
+    border: 1px solid transparent;
+}
+
+.btn-print svg {
+    display: none;
+}
 
 /*button telecharge*/
+.btn-download{
+    transition: all 0.5s ease-in-out;
+    background-color: var(--btn3);
+    border: 1px solid transparent;
+    color: var(--light);
+    width: auto;
+    padding: 10px 8px;
+    text-decoration: none;
+    border-radius: 25px;
+}
+.btn-download svg{
+    display: none;
+}
 
 /*button chemin vers formulaire de creation*/
 .btn-create {
@@ -242,12 +371,17 @@ select {
     color: var(--light);
     background-color: var(--btn3);
     width: auto;
+    border: 1px solid transparent;
     border-radius: 25px;
     align-items: center;
     padding: 8px 12px;
     transition: all 0.5s ease-in-out;
 }
-
+.btn-create:hover,.btn-print:hover,.btn-download:hover{
+    background-color: var(--light);
+    color: var(--btn3);
+    border: 1px solid var(--btn3);
+}
 
 
 form.inline {
@@ -283,10 +417,16 @@ form.inline {
     color: var(--error);
     font-size: 13px;
 }
-@media ( max-width:660px) {
+@media ( max-width:720px) {
+    header nav{
+        align-items: flex-start;
+    }
     header nav .menu .menubar{
-        display: block;
-        width: 30px;
+        display:flex;
+        justify-content: center;
+        padding: 4px 12px;
+        width: auto;
+        height: auto;
     }
     header nav .element{
         display: none;
@@ -294,21 +434,28 @@ form.inline {
     header nav .element.open{
         display: flex;
         flex-direction: column;
-        align-items: start;
-        margin: 15px 15px;
-        width: 90px;
+        width: 100%;
+    }
+    header nav a{
+        margin-left: 20px;
+        padding: 7px 0;
+        justify-content: center;
     }
     header nav .element.open:hover{
         border: 1px solid whitesmoke;
+    }
+    #navigation form{
+        margin-left: 0%;
+        justify-content: flex-start;
     }
     #navigation{
         flex-direction: column;
         align-items: flex-start;
         display: none;
     }
-    .lougout-form{
-        margin-left: 0%;
+    #logout-form .logout-link {
         margin-right: auto;
+        align-items: flex-end;
     }
     #navigation.open{
         display: flex;

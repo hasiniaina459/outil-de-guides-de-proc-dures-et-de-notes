@@ -6,6 +6,7 @@
     <h1>Individus</h1>
     <p>This is the individus index page.</p>
     <a href="{{ route('individus.create') }}" class="btn-create">Create</a>
+    <a href="{{ route('individus.historique') }}" class="btn-create">Historique</a>
     <table>
         <thead>
             <tr>

@@ -27,16 +27,12 @@ class RappelNotification extends Mailable implements ShouldQueue
     {
         $this->rappel=$rappel;
         $this->individu=$individu;
-        $this->trackUrl = $rappel->notes
-            ? URL::signedRoute('notes.track',[
+        $this->trackUrl =  URL::signedRoute('notes.track',[
             'note'=>$rappel->notes->id_note,
             'individu'=>$individu->id_individu,
-        ])
-        : null;
+        ]);
 
-        $this->noteUrl = $rappel->notes
-            ? route('notes.show',$rappel->notes->id_note)
-            : null;
+        $this->noteUrl = route('notes.show',$rappel->notes->id_note);
     }
 
     /**
@@ -55,10 +51,10 @@ class RappelNotification extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.rappel',
+            markdown: 'emails.rappel',
         );
     }
-
+    
     /**
      * Get the attachments for the message.
      *

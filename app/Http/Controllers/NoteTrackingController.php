@@ -10,7 +10,10 @@ class NoteTrackingController extends Controller
 {
     public function track(note $note,individu $individu)
     {
-        if(!$note->note_status){
+        $note->lecteurs()->updateExistingPivot($individu->id_individu,[
+            'read_at'=>now(),
+        ]);
+        if(!$note->unreadLecteurs()->doesntExist()){
             $note->update(['note_status'=>true]);
         }
         $pixel=base64_decode('R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');

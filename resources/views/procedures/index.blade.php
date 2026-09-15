@@ -4,6 +4,7 @@
     <h1>Procedures</h1>
     <p>This is the procedures index page.</p>
     <a href="{{ route('procedures.create') }}" class="btn-create">Create</a>
+    <a href="{{ route('procedures.historique') }}" class="btn-create">Historique</a>
     <table>
         <thead>
             <tr>

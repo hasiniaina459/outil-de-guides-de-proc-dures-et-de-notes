@@ -29,16 +29,6 @@
             @enderror
         </div>
         <div>
-            <label for="status">Statut:</label>
-            <select name="note_status" id="note_status" required>
-                <option value="0" {{ old('note_status') == '0' ? 'selected' : '' }}>non lu</option>
-                <option value="1" {{ old('note_status') == '1' ? 'selected' : '' }}>lu</option>
-            </select>
-            @error('note_status')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
-        <div>
             <label for="categorie">categorie :</label>
             <div class="chip-grp">
                 <input type="checkbox" name="categorie[]" id="info" class="chip-inp" value="information" {{ (is_array(old('categorie')) && in_array('information', old('categorie'))) ? 'checked' : '' }}>
@@ -54,13 +44,13 @@
         </div>
         <div>
             <label>Services concernés:</label>
-            @foreach($services as $service)
             <div class="chip-grp">
-                <input type="checkbox" name="service[]" id="service_{{ $service->id_service }}" class="chip-inp" value="{{ $service->id_service }}"
-                    {{ in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>
-                <label for="service_{{ $service->id_service }}" class="chip-lab">{{ $service->service_name }}</label>
+                @foreach($services as $service)
+                    <input type="checkbox" name="service[]" id="service_{{ $service->id_service }}" class="chip-inp" value="{{ $service->id_service }}"
+                        {{ in_array($service->id_service, old('service', [])) ? 'checked' : '' }}>
+                    <label for="service_{{ $service->id_service }}" class="chip-lab">{{ $service->service_name }}</label>
+                @endforeach
             </div>
-            @endforeach
             @error('service')
             <div class="error">{{ $message }}</div>
             @enderror

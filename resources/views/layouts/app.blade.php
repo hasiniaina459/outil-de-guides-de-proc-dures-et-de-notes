@@ -12,6 +12,9 @@
         h1 {
             display: none !important;
         }
+        table{
+            border-radius: 0px !important;
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>

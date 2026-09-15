@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Mail\NewNoteNotification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class procedureController extends Controller
 {
@@ -38,7 +39,7 @@ class procedureController extends Controller
         $validate=$request->validate(
             [
             'procedure_title'=>'required|string',
-            'description'=>'nullable|string|max:255',
+            'description'=>'required|string|max:255',
             'remove_date'=>'nullable|date',
             'service'=>'required|array|min:1',
             'service.*'=>'exists:service,id_service',
@@ -124,6 +125,20 @@ class procedureController extends Controller
         $procedures->delete();
         return redirect()->route('procedures.index')->with('success', 'procedure supprimé avec succés');
     }
+
+    public function historique()
+    {
+        $procedures = procedure::orderBy('add_date', 'desc')->get();
+        return view('procedures.historique', compact('procedures'));
+    }
+
+    public function historiqueDownload()
+    {
+        $procedures = procedure::orderBy('add_date', 'desc')->get();
+        $pdf = Pdf::loadView('procedures.historique-pdf', compact('procedures'));
+        return $pdf->download('historique-procedures.pdf');
+    }
+
     public function sendNoteEmails(note $note):void
     {
         $note->load('services.individus');

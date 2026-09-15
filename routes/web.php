@@ -27,8 +27,18 @@ Route::middleware('auth:individu')->group(function(){
     Route::resource('services', ServiceController::class)
         ->parameters(['services' => 'services']);
 
+    Route::get('individus/historique', [individuController::class, 'historique'])
+        ->name('individus.historique');
+    Route::get('individus/historique/download', [individuController::class, 'historiqueDownload'])
+        ->name('individus.historique.download');
+
     Route::resource('individus', individuController::class)
         ->parameters(['individus' => 'individus']);
+
+    Route::get('procedures/historique', [ProcedureController::class, 'historique'])
+        ->name('procedures.historique');
+    Route::get('procedures/historique/download', [ProcedureController::class, 'historiqueDownload'])
+        ->name('procedures.historique.download');
 
     Route::resource('procedures', procedureController::class)
         ->parameters(['procedures' => 'procedures']);
@@ -38,7 +48,7 @@ Route::middleware('auth:individu')->group(function(){
         
     Route::resource('rappels', rappelController::class)
         ->parameters(['rappels' => 'rappels']);
-
+    
     route::get('individus/{individus}/download',[individuController::class,'download'])
         ->name('individus.download');
 });

@@ -16,50 +16,47 @@ class CreateRappelForUnreadNotes extends Command
 
     public function handle()
     {
-        $notes = note::where('note_status', false)
-            ->where(function ($query) {
-                $query->whereNull('last_rappel_at')
-                    ->orWhere('last_rappel_at', '<=', now()->subMinutes(8));
-            })
-            ->where('note_date', '<=', now()->subMinutes(8))
-            ->with('services.individus')
-            ->get();
+        $notes = note::where(function($query){
+            $query->whereNull('last_rappel_at')
+                ->orWhere('last_rappel_at','<=',now()->subMinutes(8));
+        })
+        ->where('note_date','<=',now()->subMinutes(8))
+        ->with('unreadLecteurs')
+        ->get();
 
-        foreach ($notes as $note) {
-            $individus = $note->services->flatMap(function ($service) {
-                return $service->individus;
-            })->unique('id_individu');
-
-            if ($individus->isEmpty()) {
+        $rappelsCount=0;
+        foreach ($notes as $note){
+            $individus=$note->unreadLecteurs;
+            if($individus->isEmpty()){
+                $note->update(['note_status'=>true,'last_rappel_at'=>now()]);
                 continue;
             }
-
             $rappel = rappel::create([
                 'remind_title' => 'Note non lue: ' . $note->note_title,
                 'remind_date' => now(),
-                'remind_number' => $note->rappels()->count()+1,
+                'remind_number' => $note->rappels()->count() + 1,
                 'id_note' => $note->id_note,
                 'source' => 'auto',
             ]);
-
             $rappel->individus()->attach($individus->pluck('id_individu'));
             foreach($individus as $individu){
                 try{
                     Mail::to($individu->email)->queue(new RappelNotification($rappel,$individu));
-                }catch(\Throwable $e){
-                    log::error('echec envoi email rappel',[
-                        'id_individu'=>$individu->id_individu,
-                        'id_rappel'=>$rappel->id_rappel,
-                        'error'=>$e->getMessage(),
+                } catch(\Throwable $e){
+                    log::error('echec envoi email rappel', [
+                        'id_individu' => $individu->id_individu,
+                        'id_rappel' => $rappel->id_rappel,
+                        'error' => $e->getMessage(),
                     ]);
                 }
             }
             $note->update([
-                'rappel_create' => true,
-                'last_rappel_at' => now(),
+                'rappel_create'=>true,
+                'last_rappel_at'=>now(),
             ]);
+            $rappelsCount++;
         }
+        $this->info($rappelsCount.'rappel(s) créé .');
 
-        $this->info($notes->count() . ' rappel(s) créé(s).');
     }
 }

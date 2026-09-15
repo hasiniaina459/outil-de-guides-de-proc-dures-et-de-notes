@@ -48,7 +48,6 @@ class noteController extends Controller
         $validate['note_status']=$request->boolean('note_status', false);
         $note=note::create($validate);
         $note->services()->attach($validate['service']);
-
         $note->load('services.individus');
         $note->notifyvalid();
         return redirect()->route('notes.index')->with('success','note créée');
@@ -89,7 +88,6 @@ class noteController extends Controller
             ]
         );  
         $validate['note_date'] = now();
-        $validate['note_status'] = $request->boolean('note_status', false);
         $notes->update($validate);
         $notes->services()->sync($validate['service']);
         $notes->notifyvalid();

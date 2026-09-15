@@ -102,3 +102,14 @@ form input {
     color: var(--btn3);
     border: 2px inset var(--btn3);
 }
+@media (max-width:660px){
+    .btn {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 2px;
+        justify-content: space-between;
+    }
+    .btn a{
+        width: 92%;
+    }
+}

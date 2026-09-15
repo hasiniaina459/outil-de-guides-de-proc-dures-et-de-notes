@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'afficher les procedures')
+@section('title', 'information procedure')
 @section('content')
     <div class="retour">
         <a href="{{ route('procedures.index') }}" class="btn-index">
@@ -10,7 +10,7 @@
                 <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
             </svg>
         </a>
-        <h1>Liste des procedures</h1>
+        <h1>information procedures</h1>
     </div>
     <button type="button" onclick="window.print()" class="btn-print">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

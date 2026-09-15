@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'afficher les rappels')
+@section('title', 'information rappel')
 @section('content')
     <div class="retour">
         <a href="{{ route('rappels.index') }}" class="btn-index">

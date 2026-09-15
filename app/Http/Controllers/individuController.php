@@ -105,6 +105,19 @@ class individuController extends Controller
         return redirect()->route('individus.index')->with('success', 'individu modifié avec succès.');
     }
 
+    public function historique()
+    {
+        $individus = individu::orderBy('name', 'desc')->get();
+        return view('individus.historique', compact('individus'));
+    }
+
+    public function historiqueDownload()
+    {
+        $individus = individu::orderBy('name', 'desc')->get();
+        $pdf = Pdf::loadView('individus.historique-pdf', compact('individus'));
+        return $pdf->download('historique-personnels.pdf');
+    }
+
     /**
      * Remove the specified resource from storage.
     */

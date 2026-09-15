@@ -10,10 +10,10 @@
                 <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
             </svg>
         </a>
-        <h1>information</h1>
+        <h1>information des individus</h1>
     </div>
     <div class="champ">
-        <a href="{{ route('individus.download', $individus->id_individu) }}" class="btn-download">
+        <a href="{{ route('individus.historique.download') }}" class="btn-download">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="currentColor" viewBox="-1 2 22 28">
                 <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
@@ -31,9 +31,24 @@
             <p class="text">imprimer</p>
         </button>
     </div>
-    <p><strong>Nom:</strong> {{ $individus->name }}</p>
-    <p><strong>Prénom:</strong> {{ $individus->firstname }}</p>
-    <p><strong>Email:</strong> {{ $individus->email }}</p>
-    <p><strong>Téléphone:</strong> {{ $individus->phone }}</p>
-    <p><strong>Préférences de notification:</strong> {{ implode(', ', $individus->notif_preference ?? []) }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>telephone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($individus as $individu)
+            <tr>
+                <td>{{ $individu->name }}</td>
+                <td>{{ $individu->firstname }}</td>
+                <td>{{ $individu->phone }}</td>
+                <td>{{ $individu->email }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection
