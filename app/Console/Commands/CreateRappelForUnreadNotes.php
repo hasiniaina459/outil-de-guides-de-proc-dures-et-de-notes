@@ -57,6 +57,5 @@ class CreateRappelForUnreadNotes extends Command
             $rappelsCount++;
         }
         $this->info($rappelsCount.'rappel(s) créé .');
-
     }
 }

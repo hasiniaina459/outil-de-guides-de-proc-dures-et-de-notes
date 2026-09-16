@@ -6,9 +6,6 @@ use App\Models\procedure;
 use App\Models\service;
 use App\Models\note;
 use Illuminate\Http\Request;
-use App\Mail\NewNoteNotification;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class procedureController extends Controller
@@ -91,7 +88,7 @@ class procedureController extends Controller
         $validate = $request->validate(
             [
                 'procedure_title' => 'required|string',
-                'description' => 'nullable|string|max:255',
+                'description' => 'required|string|max:255',
                 'remove_date' => 'nullable|date',
                 'service' => 'required|array|min:1',
                 'service.*' => 'exists:service,id_service',
@@ -100,9 +97,14 @@ class procedureController extends Controller
         $validate['add_date'] = now();
         $validate['procedure_status'] = $request->boolean('procedure_status', false);
         $procedures->update($validate);
+
+        $Upcon=$procedures->wasChanged(['procedure_title','description']);
+        $servicesAvant=$procedures->services()->pluck('service.id_service')->sort()->values();
         $procedures->services()->sync($validate['service']);
+        $servicesApres=collect($validate['service'])->sort()->values();
+        $servicesModifies=$servicesAvant->toArray() !== $servicesApres->toArray();
         $note = $procedures->note;
-        if ($note) {
+        if ($note && ($Upcon || $servicesModifies)) {
             $note->update([
                 'note_title' => 'Note for procedure: ' . $validate['procedure_title'],
                 'content' => 'This is a note associated with the procedure: ' . $validate['procedure_title'],
@@ -139,25 +141,4 @@ class procedureController extends Controller
         return $pdf->download('historique-procedures.pdf');
     }
 
-    public function sendNoteEmails(note $note):void
-    {
-        $note->load('services.individus');
-        $individus = $note->services->flatMap(function ($service) {
-            return $service->individus;
-        })->unique('id_individu')
-            ->filter(function ($individu) {
-                return in_array('email', $individu->notif_preference ?? []) && $individu->email;
-            });
-        foreach ($individus as $individu) {
-            try {
-                Mail::to($individu->email)->queue(new NewNoteNotification($note,$individu));
-            } catch (\Throwable $e) {
-                Log::error('Échec envoi email note', [
-                    'individu_id' => $individu->id_individu,
-                    'note_id' => $note->id_procedure,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
-    }
 }

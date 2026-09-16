@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\note;
 use App\Models\service;
 use Illuminate\Http\Request;
-use App\Mail\NewNoteNotification;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 
 class noteController extends Controller
 {
@@ -87,10 +84,16 @@ class noteController extends Controller
                 'service.*' => 'exists:service,id_service'
             ]
         );  
+        $servicesAvant=$notes->services()->pluck('service.id_service')->sort()->values();
         $validate['note_date'] = now();
         $notes->update($validate);
         $notes->services()->sync($validate['service']);
-        $notes->notifyvalid();
+        $servicesApres=collect($validate['service'])->sort()->values();
+        $servicesModifies=$servicesAvant->toArray() !== $servicesApres->toArray();
+        $contenuModifie=$notes->wasChanged(['note_title','content','categorie']);
+        if($contenuModifie || $servicesModifies){
+            $notes->notifyvalid();
+        }
         return redirect()->route('notes.index')->with('success', 'note modifié');
     }
 

@@ -30,12 +30,18 @@
         </div>
         <div>
             <label for="categorie">categorie :</label>
+            @php
+            $categorie=old('categorie',[]);
+            @endphp
             <div class="chip-grp">
-                <input type="checkbox" name="categorie[]" id="info" class="chip-inp" value="information" {{ (is_array(old('categorie')) && in_array('information', old('categorie'))) ? 'checked' : '' }}>
+                <input type="checkbox" name="categorie[]" id="info" class="chip-inp" value="information" 
+                    {{ in_array('information',$categorie) ? 'checked' : '' }}>
                 <label for="info" class="chip-lab"> information</label>
-                <input type="checkbox" name="categorie[]" id="new" class="chip-inp" value="nouvelle" {{ (is_array(old('categorie')) && in_array('nouvelle', old('categorie'))) ? 'checked' : '' }}>
+                <input type="checkbox" name="categorie[]" id="new" class="chip-inp" value="nouvelle"
+                    {{ in_array('nouvelle',$categorie) ? 'checked' : '' }}>
                 <label for="new" class="chip-lab"> nouvelle</label>
-                <input type="checkbox" name="categorie[]" id="fns" class="chip-inp" value="termine" {{ (is_array(old('categorie')) && in_array('termine', old('categorie'))) ? 'checked' : '' }}>
+                <input type="checkbox" name="categorie[]" id="fns" class="chip-inp" value="termine"
+                    {{ in_array('termine',$categorie) ? 'checked' : '' }}>
                 <label for="fns" class="chip-lab"> terminer</label>
                 @error('categorie')
                 <div class="error">{{$message}}</div>

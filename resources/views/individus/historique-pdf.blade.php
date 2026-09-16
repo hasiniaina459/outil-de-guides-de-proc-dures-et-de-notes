@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Historique des procédures</title>
+    <title>Historique des individus</title>
     <style>
         table {
             width: 100%;
@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <p><strong>Historique des procédures</strong></p>
+    <p><strong>Historique des individus</strong></p>
     <table>
         <thead>
             <tr>

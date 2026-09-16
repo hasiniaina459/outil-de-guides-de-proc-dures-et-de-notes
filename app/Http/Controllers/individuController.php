@@ -107,13 +107,13 @@ class individuController extends Controller
 
     public function historique()
     {
-        $individus = individu::orderBy('name', 'desc')->get();
+        $individus = individu::orderBy('name', 'asc')->get();
         return view('individus.historique', compact('individus'));
     }
 
     public function historiqueDownload()
     {
-        $individus = individu::orderBy('name', 'desc')->get();
+        $individus = individu::orderBy('name', 'asc')->get();
         $pdf = Pdf::loadView('individus.historique-pdf', compact('individus'));
         return $pdf->download('historique-personnels.pdf');
     }

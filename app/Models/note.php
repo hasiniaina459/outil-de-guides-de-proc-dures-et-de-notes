@@ -40,7 +40,9 @@ class note extends Model
 
     public function lecteurs():BelongsToMany
     {
-        return $this->belongsToMany(individu::class,'lecteur','id_note','id_individu');
+        return $this->belongsToMany(individu::class,'lecture','id_note','id_individu')
+            ->withPivot('read_at')
+            ->withTimestamps();
     }
 
     public function unreadLecteurs():BelongsToMany
@@ -57,7 +59,7 @@ class note extends Model
                 (array) $this->categorie,
                 $individu->notif_preference ?? []
             )));
-        $existingIds=$this->lecteurs()->pluck('id-individu');
+        $existingIds=$this->lecteurs()->pluck('id_individu')->all();
 
         foreach ($individus as $individu) {
             if(!in_array($individu->id_individu,$existingIds)){
@@ -72,6 +74,9 @@ class note extends Model
                     'error' => $e->getMessage(),
                 ]);
             }
+        }
+        if($this->unreadLecteurs()->exists()){
+            $this->update(['note_status'=>false]);
         }
     }
 }

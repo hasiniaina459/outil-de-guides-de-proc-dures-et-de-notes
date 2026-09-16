@@ -32,7 +32,6 @@
     <div>
         <label for="categorie">categorie</label>
         @php
-        // old() en priorité (si la validation a échoué), sinon les catégories déjà en base
         $categoriesSelectionnes = old('categorie', $notes->categorie ?? []);
         @endphp
         <div class="chip-grp">
