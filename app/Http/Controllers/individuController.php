@@ -35,7 +35,7 @@ class individuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,note $notes)
+    public function store(Request $request)
     {
         $validate=$request->validate(
             ['name' => 'required|string|max:50',
@@ -50,6 +50,7 @@ class individuController extends Controller
             ]
         );
         $validate['password'] = bcrypt($validate['password']);
+        $validate['role'] = individu::count()===0 ? 'admin' :'ordinaire';
         individu::create($validate);
 
         if (!auth('individu')->check()) {
@@ -107,13 +108,13 @@ class individuController extends Controller
 
     public function historique()
     {
-        $individus = individu::orderBy('name', 'asc')->get();
+        $individus = individu::with('service')->orderBy('name', 'asc')->get();
         return view('individus.historique', compact('individus'));
     }
 
     public function historiqueDownload()
     {
-        $individus = individu::orderBy('name', 'asc')->get();
+        $individus = individu::with('service')->orderBy('name', 'asc')->get();
         $pdf = Pdf::loadView('individus.historique-pdf', compact('individus'));
         return $pdf->download('historique-personnels.pdf');
     }

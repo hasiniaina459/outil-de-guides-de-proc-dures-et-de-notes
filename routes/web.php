@@ -7,6 +7,7 @@ use App\Http\Controllers\procedureController;
 use App\Http\Controllers\noteController;
 use App\Http\Controllers\rappelController;
 use App\Http\Controllers\NoteTrackingController;
+use App\Http\Controllers\DMAdminController;
 use App\Http\Controllers\Auth\IndividuAuthController;
 
 Route::middleware('guest:individu')->group(function(){
@@ -51,4 +52,20 @@ Route::middleware('auth:individu')->group(function(){
     
     route::get('individus/{individus}/download',[individuController::class,'download'])
         ->name('individus.download');
+    
+    Route::get('/demandes', [DMAdminController::class, 'create'])
+        ->name('demandes.create');
+    Route::post('/demandes', [DMAdminController::class, 'store'])
+        ->name('demandes.store');
+
+    Route::middleware('admin')->group(function(){
+        Route::get('/admin/demandes',[DMAdminController::class,'index'])
+            ->name('admin.demandes.index');
+
+        Route::post('/admin/demandes/{demande}/approve',[DMAdminController::class,'approve'])
+            ->name('admin.demandes.approve');
+
+        Route::post('admin/demandes/{demande}/reject',[DMAdminController::class,'reject'])
+            ->name('admin.demandes.reject');
+    });
 });

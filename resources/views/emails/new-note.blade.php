@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html>
+<x-mail::message>
+Nouvelle notification <br>
 
-<head>
-    <meta charset="utf-8">
-</head>
-<body style="font-family: Arial, sans-serif; color: #333;">
-    <h2>Nouvelle note ajoutée</h2>
-    <p><strong>Titre:</strong> {{ $note->note_title }}</p>
-    <p><strong>Contenu:</strong></p>
-    <p>{{ $note->content }}</p>
-    <p><strong>Date:</strong> {{ $note->note_date->format('d/m/Y H:i') }}</p>
-    <hr>
-    <p style="font-size: 12px; color: #999;">Cet email a été envoyé automatiquement par l'application Outils de Guides.</p>
-    <img src="{{ URL::signedRoute('notes.track', ['note' => $note->id_note, 'individu' => $individu->id_individu]) }}" width="1" height="1" style="display:none;" alt="">
-</body>
-
-</html>
+TItre: {{$note->note_title}},
+Contenu :
+{{ $note->content }} .
+Date: {{$note->note_date->format('d/m/Y H:i')}}
+<x-mail::button :url="$confirmUrl">
+OK
+</x-mail::button>
+Merci,<br>
+{{config('app.name')}}
+<img src="{{ $trackUrl }}" width="1" height="1" style="display:none" alt="">
+</x-mail::message>

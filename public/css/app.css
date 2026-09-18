@@ -13,8 +13,8 @@
     --light: #FFFFFF; 
     --dark-color: #2c3e50;
     --btn3: #4c4c4f;
-    --bgsuccess:#1F895D;
-    --bordersuccess: #206F4E;
+    --bgsuccess:#2A5318;
+    --bordersuccess: #0B1207;
     --success: #D2F4E6;
     --bgerror:#7F1015;
     --bordererror:#5F1C1F;
@@ -389,8 +389,8 @@ form.inline {
 }
 
 .alert-success {
-    background: #dff0d8;
-    color: var(--success);
+    background: var(--success);
+    color: var(--bgsuccess);
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 15px;

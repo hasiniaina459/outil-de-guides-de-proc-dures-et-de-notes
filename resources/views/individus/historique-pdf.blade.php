@@ -33,6 +33,7 @@
                 <th>Prénom</th>
                 <th>telephone</th>
                 <th>Email</th>
+                <th>Service</th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +43,7 @@
                 <td>{{ $individu->firstname }}</td>
                 <td>{{ $individu->phone }}</td>
                 <td>{{ $individu->email }}</td>
+                <td>{{$individu->service->service_name ?? 'aucun'}}</td>
             </tr>
             @endforeach
         </tbody>

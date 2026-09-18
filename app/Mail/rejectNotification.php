@@ -3,8 +3,6 @@
 namespace App\Mail;
 
 use App\Models\individu;
-use App\Models\note;
-use App\Models\rappel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,30 +10,17 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 
-class RappelNotification extends Mailable implements ShouldQueue
+class rejectNotification extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public rappel $rappel;
     public individu $individu;
-    public string $trackUrl;
-    public string $confirmUrl;
-    /**create a new message instance.
+    /**
+     * Create a new message instance.
      */
-    public function __construct(rappel $rappel,individu $individu)
+    public function __construct(individu $individu)
     {
-        $this->rappel=$rappel;
-        $this->individu=$individu;
-        $this->trackUrl =  URL::signedRoute('notes.track',[
-            'note'=>$rappel->notes->id_note,
-            'individu'=>$individu->id_individu,
-        ]);
-        $this->confirmUrl = URL::signedRoute('notes.track', [
-            'note'=>$rappel->notes->id_note,
-            'individu' => $individu->id_individu,
-            'confirm' => 1,
-        ]);
+        $this->individu = $individu;
     }
 
     /**
@@ -44,7 +29,7 @@ class RappelNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel : ' . $this->rappel->remind_title,
+            subject: 'Reject Notification',
         );
     }
 
@@ -54,10 +39,10 @@ class RappelNotification extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.rappel',
+            markdown: 'emails.reject',
         );
     }
-    
+
     /**
      * Get the attachments for the message.
      *

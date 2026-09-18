@@ -12,6 +12,7 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class NewNoteNotification extends Mailable implements ShouldQueue
 {
@@ -19,11 +20,24 @@ class NewNoteNotification extends Mailable implements ShouldQueue
 
     public note $note;
     public individu $individu;
+    public string $trackUrl;
+    public string $confirmUrl;
 
     public function __construct(note $note,individu $individu)
     {
         $this->note = $note;
         $this->individu = $individu;
+
+        $this->trackUrl = URL::signedRoute('notes.track',[
+            'note'=>$note->id_note,
+            'individu'=>$individu->id_individu,
+            ]);
+        
+        $this->confirmUrl = URL::signedRoute('notes.track',[
+            'note'=>$note->id_note,
+            'individu'=>$individu->id_individu,
+            'confirm'=>1,
+        ]);
     }
 
     /**
@@ -32,7 +46,7 @@ class NewNoteNotification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nouvelle note' . $this->note->note_title,
+            subject: 'Nouvelle note : ' . $this->note->note_title,
         );
     }
 
@@ -42,7 +56,7 @@ class NewNoteNotification extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.new-note',
+            markdown: 'emails.new-note',
         );
     }
 

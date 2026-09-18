@@ -12,7 +12,8 @@
         h1 {
             display: none !important;
         }
-        table{
+
+        table {
             border-radius: 0px !important;
         }
     </style>
@@ -37,6 +38,16 @@
                 <a href="{{ route('procedures.index') }}">Procedures</a>
                 <a href="{{ route('notes.index') }}">Notes</a>
                 <a href="{{ route('rappels.index') }}">Rappels</a>
+                @auth('individu')
+                @php $currentIndividu= auth('individu')->user(); @endphp
+                
+                @if ($currentIndividu->estAdmin())
+                <a href="{{ route('admin.demandes.index') }}">admin</a>
+                @elseif ($currentIndividu->peutDemanderAdmin())
+                <a href="{{ route('demandes.create') }}"> devenir admin</a>
+                @endif
+
+                @endauth
                 <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display:inline;">
                     @csrf
                     <button type="submit" class="logout-link">déconnexion</button>

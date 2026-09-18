@@ -1,10 +1,11 @@
 <x-mail::message>
-Rappel : {{ $rappel->remind_title }}
+Rappel : {{ $rappel->remind_title }} <br>
 Bonjour ,
-{{ $individu->name }} {{ $individu->firstname }},
+{{ $individu->name }} {{ $individu->firstname }}, <br>
 Ceci est un rappel concernant la note liée : {{ $rappel->notes->note_title }}.
-<x-mail::button :url="$noteUrl">
-voir note
+<br>
+<x-mail::button :url="$confirmUrl">
+OK
 </x-mail::button>
 Merci,<br>
 {{config('app.name')}}

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('id_service')->nullable()
                 ->constrained('service', 'id_service')
                 ->nullOnDelete();
+            $table->enum('role', ['admin', 'ordinaire'])->default('ordinaire');
             $table->timestamps();
         });
     }

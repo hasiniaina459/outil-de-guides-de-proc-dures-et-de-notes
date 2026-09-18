@@ -59,7 +59,7 @@ class note extends Model
                 (array) $this->categorie,
                 $individu->notif_preference ?? []
             )));
-        $existingIds=$this->lecteurs()->pluck('id_individu')->all();
+        $existingIds=$this->lecteurs()->pluck('individu.id_individu')->all();
 
         foreach ($individus as $individu) {
             if(!in_array($individu->id_individu,$existingIds)){

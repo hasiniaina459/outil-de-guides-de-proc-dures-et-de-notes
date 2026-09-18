@@ -21,9 +21,11 @@ class CreateRappelForUnreadNotes extends Command
                 ->orWhere('last_rappel_at','<=',now()->subMinutes(8));
         })
         ->where('note_date','<=',now()->subMinutes(8))
+        ->withCount('rappels')
         ->with('unreadLecteurs')
         ->get();
 
+        $rappelmax=4;
         $rappelsCount=0;
         foreach ($notes as $note){
             $individus=$note->unreadLecteurs;
@@ -31,6 +33,12 @@ class CreateRappelForUnreadNotes extends Command
                 $note->update(['note_status'=>true,'last_rappel_at'=>now()]);
                 continue;
             }
+            if ($note->rappels_count >= $rappelmax) {
+                $note->update(['last_rappel_at' => now()]);
+                Log::warning("seuil limite atteint");
+                continue;
+            };
+
             $rappel = rappel::create([
                 'remind_title' => 'Note non lue: ' . $note->note_title,
                 'remind_date' => now(),
@@ -43,19 +51,21 @@ class CreateRappelForUnreadNotes extends Command
                 try{
                     Mail::to($individu->email)->queue(new RappelNotification($rappel,$individu));
                 } catch(\Throwable $e){
-                    log::error('echec envoi email rappel', [
+                    Log::error('echec envoi email rappel', [
                         'id_individu' => $individu->id_individu,
                         'id_rappel' => $rappel->id_rappel,
                         'error' => $e->getMessage(),
                     ]);
                 }
             }
+            
             $note->update([
-                'rappel_create'=>true,
-                'last_rappel_at'=>now(),
+                'rappel_create' => true,
+                'last_rappel_at' => now(),
             ]);
+            
             $rappelsCount++;
         }
-        $this->info($rappelsCount.'rappel(s) créé .');
+        $this->info($rappelsCount . 'rappel(s) créé .');
     }
 }

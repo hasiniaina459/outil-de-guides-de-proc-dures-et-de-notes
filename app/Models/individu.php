@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as authentificatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -12,7 +13,7 @@ class individu extends authentificatable
     use Notifiable;
     protected $table='individu';
     protected $primaryKey='id_individu';
-    protected $fillable=['name','firstname','phone','email','address','id_service','notif_preference','password'];
+    protected $fillable=['name','firstname','phone','email','address','id_service','notif_preference','password','role'];
     protected $hidden=['password'];
     protected function casts():array
     {
@@ -28,5 +29,28 @@ class individu extends authentificatable
     public function rappels():BelongsToMany
     {
         return $this->belongsToMany(rappel::class,'recevoir', 'id_individu', 'id_rappel');
+    }
+    public function demandesAdmin():HasMany
+    {
+        return $this->hasMany(DemandeAdmin::class,'id_individu','id_individu');
+    }
+    public function estAdmin():bool
+    {
+        return $this->role === 'admin';
+    }
+    public function peutDemanderAdmin():bool
+    {
+        if($this->estAdmin()){
+            return false;
+        }
+        $demandeBloquante= $this->demandesAdmin()
+            ->where(function ($query){
+                $query->where('status','en_attente')
+                    ->orWhere(function ($q){
+                        $q->where('status','rejetee')
+                            ->where('rejected_at','>',now()->subDays(3));
+                    });
+            })->exists();
+        return !$demandeBloquante;
     }
 }

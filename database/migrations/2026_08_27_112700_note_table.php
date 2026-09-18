@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('note_title');
             $table->string('content');
             $table->boolean('note_status');
-            $table->string('categorie');
+            $table->json('categorie');
             $table->timestamp('last_rappel_at')->nullable();
             $table->timestamp('note_date');
             $table->timestamps();
