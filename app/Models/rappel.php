@@ -16,7 +16,8 @@ class rappel extends Model
     protected function casts():array
     {
         return[
-            'remind_number'=>'integer'
+            'remind_number'=>'integer',
+            'remind_date'=>'datetime',
         ];
     }
     //RECEVOIR:un rappel peut etre envoyer plusieur fois à la même personne

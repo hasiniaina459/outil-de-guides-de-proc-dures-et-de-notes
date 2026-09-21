@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\individu;
 use App\Models\service;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Auth\IndividuAuthController;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -24,6 +25,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
+        $this->autoriserConsultation();
         return view('services.create');
     }
 
@@ -32,6 +34,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $this->autoriserConsultation();
         $validated = $request->validate([
             'service_name' => 'required|string|max:100',
             'description' => 'nullable|string',
@@ -54,6 +57,7 @@ class ServiceController extends Controller
      */
     public function edit(service $services)
     {
+        $this->autoriserConsultation();
         return view('services.edit',compact('services'));
     }
 
@@ -62,7 +66,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, service $services)
     {
-
+        $this->autoriserConsultation();
         $validated = $request->validate([
             'service_name' => 'required|string|max:100',
             'description' => 'nullable|string',
@@ -76,7 +80,15 @@ class ServiceController extends Controller
      */
     public function destroy(service $services)
     {
+        $this->autoriserConsultation();
         $services->delete();
         return redirect()->route('services.index')->with('success', 'Service supprimer .');
+    }
+    private function autoriserConsultation(): void
+    {
+        $current = auth('individu')->user();
+        if (!$current instanceof individu || !$current->estAdmin()) {
+            abort(403, "action non autoriséé");
+        }
     }
 }

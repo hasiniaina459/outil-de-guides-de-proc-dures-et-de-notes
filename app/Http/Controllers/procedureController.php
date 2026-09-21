@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\procedure;
 use App\Models\service;
+use App\Models\individu;
 use App\Models\note;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Auth\IndividuAuthController;
+use Illuminate\Support\Facades\Auth;
 
 class procedureController extends Controller
 {
@@ -24,6 +27,7 @@ class procedureController extends Controller
      */
     public function create()
     {
+        $this->autoriserConsultation();
         $services=service::all();
         return view('procedures.create',compact('services'));
     }
@@ -33,6 +37,7 @@ class procedureController extends Controller
      */
     public function store(Request $request)
     {
+        $this->autoriserConsultation();
         $validate=$request->validate(
             [
             'procedure_title'=>'required|string',
@@ -75,6 +80,7 @@ class procedureController extends Controller
      */
     public function edit(procedure $procedures)
     {
+        $this->autoriserConsultation();
         $services=service::all();
         $procedures->load('services');
         return view('procedures.edit',compact('procedures','services'));
@@ -85,6 +91,7 @@ class procedureController extends Controller
      */
     public function update(Request $request, procedure $procedures)
     {
+        $this->autoriserConsultation();
         $validate = $request->validate(
             [
                 'procedure_title' => 'required|string',
@@ -124,6 +131,7 @@ class procedureController extends Controller
      */
     public function destroy(procedure $procedures)
     {
+        $this->autoriserConsultation();
         $procedures->delete();
         return redirect()->route('procedures.index')->with('success', 'procedure supprimé avec succés');
     }
@@ -141,4 +149,11 @@ class procedureController extends Controller
         return $pdf->download('historique-procedures.pdf');
     }
 
+    private function autoriserConsultation(): void
+    {
+        $current = auth('individu')->user();
+        if (!$current instanceof individu || !$current->estAdmin()) {
+            abort(403, "action non autoriséé");
+        }
+    }
 }

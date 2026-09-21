@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\individu;
 use App\Models\note;
 use App\Models\service;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class noteController extends Controller
 {
@@ -22,6 +25,7 @@ class noteController extends Controller
      */
     public function create()
     {
+        $this->autoriserConsultation();
         $services=service::all();
         return view('notes.create',compact('services'));
     }
@@ -31,6 +35,7 @@ class noteController extends Controller
      */
     public function store(Request $request)
     {
+        $this->autoriserConsultation();
         $validate=$request->validate(
             [
                 'note_title'=>'required|string|max:100',
@@ -64,6 +69,7 @@ class noteController extends Controller
      */
     public function edit(note $notes)
     {
+        $this->autoriserConsultation();
         $services=service::all();
         $notes->load('services','rappels');
         return view('notes.edit', compact('services','notes'));
@@ -74,6 +80,7 @@ class noteController extends Controller
      */
     public function update(Request $request, note $notes)
     {
+        $this->autoriserConsultation();
         $validate = $request->validate(
             [
                 'note_title' => 'required|string|max:100',
@@ -102,8 +109,28 @@ class noteController extends Controller
      */
     public function destroy(note $notes)
     {
-
+        $this->autoriserConsultation();
         $notes->delete();
         return redirect()->route('notes.index')->with('success', 'note supprimé');
+    }
+    
+    //historique
+    public function historique()
+    {
+        $notes = note::orderBy('note_title','asc')->get();
+        return view('notes.historique',compact('notes'));
+    }
+    public function historiqueDownload()
+    {
+        $notes = note::orderBy('note_title','asc')->get();
+        $pdf = Pdf::loadView('notes.historique-pdf',compact('notes'));
+        return $pdf->download('historique-notes.pdf');
+    }
+    private function autoriserConsultation():void
+    {
+        $current=auth('individu')->user();
+        if (!$current instanceof individu || !$current->estAdmin()){
+            abort(403, "action non autoriséé");
+        }
     }
 }

@@ -1,10 +1,14 @@
 @extends('layouts.app')
 @section('title', 'rappels')
 @section('content')
+@php $currentIndividu=auth('individu')->user(); @endphp
     <h1>Rappels</h1>
     <p>This is the rappels index page.</p>
-
+    @if ($currentIndividu->estAdmin())
     <a href="{{ route('rappels.create') }}" class="btn-create">Create</a>
+    @endif
+
+    <a href="{{ route('rappels.historique') }}" class="btn-create">Historique</a>
     <table>
         <thead>
             <tr>
@@ -23,9 +27,9 @@
                 <td>{{ $rappel->remind_number }}</td>
                 <td>
                     @if($rappel->source === 'auto')
-                        <span class="auto">auto</span>
+                    <span class="auto">auto</span>
                     @else
-                        <span class="manuel">Manuel</span>
+                    <span class="manuel">Manuel</span>
                     @endif
                 </td>
                 <td>
@@ -37,6 +41,7 @@
                             <path d="M8 11h8v2H8zm0 4h8v2H8zm0-8h3v2H8z"></path>
                         </svg>
                     </a>
+                    @if ($currentIndividu->estAdmin())
                     <a href="{{ route('rappels.edit', $rappel->id_rappel) }}" class="btn-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             fill="currentColor" viewBox="0 0 24 24">
@@ -57,6 +62,7 @@
                             </svg>
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

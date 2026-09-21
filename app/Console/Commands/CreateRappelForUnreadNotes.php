@@ -16,7 +16,8 @@ class CreateRappelForUnreadNotes extends Command
 
     public function handle()
     {
-        $notes = note::where(function($query){
+        $notes = note::where('note_status',false)
+        ->where(function($query){
             $query->whereNull('last_rappel_at')
                 ->orWhere('last_rappel_at','<=',now()->subMinutes(8));
         })
@@ -34,15 +35,15 @@ class CreateRappelForUnreadNotes extends Command
                 continue;
             }
             if ($note->rappels_count >= $rappelmax) {
-                $note->update(['last_rappel_at' => now()]);
-                Log::warning("seuil limite atteint");
+                $note->update(['note_status'=>true,'last_rappel_at' => now()]);
+                Log::warning("seuil limite atteint pour la note {$note->id_note}");
                 continue;
             };
 
             $rappel = rappel::create([
                 'remind_title' => 'Note non lue: ' . $note->note_title,
                 'remind_date' => now(),
-                'remind_number' => $note->rappels()->count() + 1,
+                'remind_number' => $note->rappels_count + 1,
                 'id_note' => $note->id_note,
                 'source' => 'auto',
             ]);

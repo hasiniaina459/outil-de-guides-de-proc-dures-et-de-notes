@@ -3,31 +3,35 @@
 @section('title', 'Services')
 
 @section('content')
-    <h1>Services</h1>
-    <p>This is the services index page.</p>
+@php $currentIndividu=auth('individu')->user(); @endphp
+<h1>Services</h1>
+<p>This is the services index page.</p>
+@if ($currentIndividu->estAdmin())
     <a href="{{ route('services.create') }}" class="btn-create">create</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($services as $service)
-            <tr>
-                <td>{{ $service->service_name }}</td>
-                <td>{{ $service->description }}</td>
-                <td>
-                    <a href="{{route('services.show',$service->id_service) }}" class="btn-show">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            fill="currentColor" viewBox="0 0 24 24">
-                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                            <path d="m19.94 7.68-.03-.09a.8.8 0 0 0-.2-.29l-5-5c-.09-.09-.19-.15-.29-.2l-.09-.03a.8.8 0 0 0-.26-.05c-.02 0-.04-.01-.06-.01H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-12s-.01-.04-.01-.06c0-.09-.02-.17-.05-.26ZM6 20V4h7v4c0 .55.45 1 1 1h4v11z"></path>
-                            <path d="M8 11h8v2H8zm0 4h8v2H8zm0-8h3v2H8z"></path>
-                        </svg>
-                    </a>
+@endif
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($services as $service)
+        <tr>
+            <td>{{ $service->service_name }}</td>
+            <td>{{ $service->description }}</td>
+            <td>
+                <a href="{{route('services.show',$service->id_service) }}" class="btn-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="m19.94 7.68-.03-.09a.8.8 0 0 0-.2-.29l-5-5c-.09-.09-.19-.15-.29-.2l-.09-.03a.8.8 0 0 0-.26-.05c-.02 0-.04-.01-.06-.01H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-12s-.01-.04-.01-.06c0-.09-.02-.17-.05-.26ZM6 20V4h7v4c0 .55.45 1 1 1h4v11z"></path>
+                        <path d="M8 11h8v2H8zm0 4h8v2H8zm0-8h3v2H8z"></path>
+                    </svg>
+                </a>
+                @if ($currentIndividu->estAdmin())
                     <a href="{{ route('services.edit', $service->id_service) }}" class="btn-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             fill="currentColor" viewBox="0 0 24 24">
@@ -48,9 +52,10 @@
                             </svg>
                         </button>
                     </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                @endif
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 @endsection

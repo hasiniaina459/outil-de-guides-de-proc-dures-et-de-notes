@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Mail\RappelNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\individu;
 use App\Models\rappel;
+use App\Http\Controllers\Auth\IndividuAuthController;
+use Illuminate\Support\Facades\Auth;
 use App\Models\note;
 use Illuminate\Http\Request;
 
@@ -26,6 +29,7 @@ class rappelController extends Controller
      */
     public function create()
     {
+        $this->autoriserConsultation();
         $individus=individu::all();
         $notes=note::where('note_status',false)->get();
         return view('rappels.create',compact('individus','notes'));
@@ -35,6 +39,7 @@ class rappelController extends Controller
      */
     public function store(Request $request)
     {
+        $this->autoriserConsultation();
         $validate=$request->validate(
             [
                 'remind_title'=>'required|string|max:100',
@@ -60,7 +65,7 @@ class rappelController extends Controller
             try {
                 Mail::to($individu->email)->queue(new RappelNotification($rappels, $individu));
             } catch (\Throwable $e) {
-                log::error('echec envoi email rappel', [
+                Log::error('echec envoi email rappel', [
                     'id_individu' => $individu->id_individu,
                     'id_rappel' => $rappels->id_rappel,
                     'error' => $e->getMessage(),
@@ -84,6 +89,7 @@ class rappelController extends Controller
      */
     public function edit(rappel $rappels)
     {
+        $this->autoriserConsultation();
         $individus=individu::all();
         $rappels->load('individus','notes');
         $notes = note::where('note_status', false)->get();
@@ -95,6 +101,7 @@ class rappelController extends Controller
      */
     public function update(Request $request, rappel $rappels)
     {
+        $this->autoriserConsultation();
         $validate = $request->validate(
             [
                 'remind_title' => 'required|string|max:100',
@@ -118,7 +125,7 @@ class rappelController extends Controller
             try {
                 Mail::to($individu->email)->queue(new RappelNotification($rappels, $individu));
             } catch (\Throwable $e) {
-                log::error('echec envoi email rappel', [
+                Log::error('echec envoi email rappel', [
                     'id_individu' => $individu->id_individu,
                     'id_rappel' => $rappels->id_rappel,
                     'error' => $e->getMessage(),
@@ -133,7 +140,36 @@ class rappelController extends Controller
      */
     public function destroy(rappel $rappels)
     {
+        $this->autoriserConsultation();
         $rappels->delete();
         return redirect()->route('rappels.index')->with('success', 'rappel supprimé');
+    }
+    //historique
+    public function historique()
+    {
+        $rappels = rappel::with('notes')->get()
+            ->groupBy('id_note')
+            ->map(fn($groupe) => $groupe->sortByDesc('remind_number')->first())
+            ->sortByDesc('remind_number')->values();
+        
+            return view('rappels.historique',compact('rappels'));
+    }
+
+    public function historiqueDownload()
+    {
+        $rappels = rappel::with('notes')->get()
+            ->groupBy('id_note')
+            ->map(fn($groupe) => $groupe->sortByDesc('remind_number')->first())
+            ->sortByDesc('remind_number')->values();
+
+        $pdf = Pdf::loadView('rappels.historique-pdf',compact('rappels'));
+        return $pdf->download('historique-rappels.pdf');
+    }
+    private function autoriserConsultation(): void
+    {
+        $current = auth('individu')->user();
+        if (!$current instanceof individu || !$current->estAdmin()) {
+            abort(403, "action non autoriséé");
+        }
     }
 }

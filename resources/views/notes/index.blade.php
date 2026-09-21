@@ -1,9 +1,13 @@
 @extends('layouts.app')
 @section('title', 'notes')
 @section('content')
+@php $currentIndividu=auth('individu')->user(); @endphp
     <h1>notes</h1>
     <p>This is the notes index page.</p>
+    @if ($currentIndividu->estAdmin())
     <a href="{{ route('notes.create') }}" class="btn-create">Create</a>
+    @endif
+    <a href="{{ route('notes.historique') }}" class="btn-create">Historique</a>
     <table>
         <thead>
             <tr>
@@ -30,6 +34,7 @@
                             <path d="M8 11h8v2H8zm0 4h8v2H8zm0-8h3v2H8z"></path>
                         </svg>
                     </a>
+                    @if ($currentIndividu->estAdmin())
                     <a href="{{ route('notes.edit', $note->id_note) }}" class="btn-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             fill="currentColor" viewBox="0 0 24 24">
@@ -50,6 +55,7 @@
                             </svg>
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

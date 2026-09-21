@@ -64,6 +64,8 @@ class note extends Model
         foreach ($individus as $individu) {
             if(!in_array($individu->id_individu,$existingIds)){
                 $this->lecteurs()->attach($individu->id_individu,['read_at'=>null]);
+            } else{
+                $this->lecteurs()->updateExistingPivot($individu->id_individu,['read_at'=>null]);
             }
             try {
                 Mail::to($individu->email)->queue(new NewNoteNotification($this,$individu));
@@ -77,6 +79,8 @@ class note extends Model
         }
         if($this->unreadLecteurs()->exists()){
             $this->update(['note_status'=>false]);
+        } else {
+            $this->update(['note_status'=>true]);
         }
     }
 }

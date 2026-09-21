@@ -65,6 +65,7 @@ class individuController extends Controller
      */
     public function show(individu $individus)
     {
+        $this->autoriserConsultation($individus);
         $individus->load('service', 'rappels');
         return view('individus.show', compact('individus'));
     }
@@ -74,6 +75,7 @@ class individuController extends Controller
      */
     public function edit(individu $individus)
     {
+        $this->autoriserModification($individus);
         $services=service::all();
         $individus->load('service', 'rappels');
         return view('individus.edit', compact('individus', 'services'));
@@ -84,6 +86,7 @@ class individuController extends Controller
      */
     public function update(Request $request, individu $individus)
     {
+        $this->autoriserModification($individus);
         $validate = $request->validate(
             [
                 'name' => 'required|string|max:50',
@@ -124,6 +127,7 @@ class individuController extends Controller
     */
     public function destroy(individu $individus)
     {
+        $this->autoriserSuppression($individus);
         $individus->delete();
         return redirect()->route('individus.index')->with('success', 'individu supprimé avec succès.');
     }
@@ -139,5 +143,31 @@ class individuController extends Controller
         $remind_number=$individus->rappels->count();
         $pdf = pdf::loadView('individus.pdf', compact('individus','procedure_eff','procedure_neff','remind_number'));
         return $pdf->download('individus-' . $individus->id_individu . '.pdf');
+    }
+    //restriction
+    
+    private function estSoiMeme(individu $individus):bool{
+        return auth('individu')->id()===$individus->id_individu;
+    }
+    private function autoriserConsultation(individu $individus){
+        /** @var individu $current */
+        $current=auth('individu')->user();
+        if (!$this->estSoiMeme($individus) && !$current->estAdmin()){
+            abort(403,"vous ne pouvez pas consulte votre profil.");
+        }
+    }
+    private function autoriserModification(individu $individus):void
+    {
+        if (!$this->estSoiMeme($individus)){
+            abort(403,"vous ne pouvez modifier que votre profil.");
+        }
+    }
+    private function autoriserSuppression(individu $individus): void
+    {
+        /** @var individu $current */
+        $current= auth('individu')->user();
+        if (!$this->estSoiMeme($individus) && !$current->estAdmin()){
+            abort(403,"action non autoriséé");
+        }
     }
 }
