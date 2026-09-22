@@ -31,9 +31,9 @@
     <div>
         <label for="status">Statut:</label>
         <div class="rd-grp">
-            <input type="radio" name="procedure_status" value="1" class="rd-inp" id="status-ec" {{ old('status') ? 'checked' : '1' }}>
+            <input type="radio" name="procedure_status" value="0" class="rd-inp" id="status-ec" {{ old('status') ? 'checked' : '0' }}>
             <label for="status-ec" class="rd-lab rd-ec">en cours</label>
-            <input type="radio" name="procedure_status" value="0" class="rd-inp" id="status-t" {{ old('status') ? 'checked' : '0' }}>
+            <input type="radio" name="procedure_status" value="1" class="rd-inp" id="status-t" {{ old('status') ? 'checked' : '1' }}>
             <label for="status-t" class="rd-lab rd-t">termine</label>
         </div>
         @error('procedure_status')
