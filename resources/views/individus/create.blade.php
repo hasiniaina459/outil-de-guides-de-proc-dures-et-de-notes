@@ -10,7 +10,7 @@
                 <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
             </svg>
         </a>
-        <h1>Création d'un individu</h1>
+        <h1>Création d'un compte</h1>
     </div>
     <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
     <form action="{{ auth('individu')->check() ? route('individus.store') : route('register.store') }}" method="POST">
@@ -86,6 +86,6 @@
             <div class="error">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit">Créer l'individu</button>
+        <button type="submit">Créer le compte</button>
     </form>
 @endsection

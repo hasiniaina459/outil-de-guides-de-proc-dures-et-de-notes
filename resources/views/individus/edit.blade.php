@@ -10,7 +10,7 @@
             <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
         </svg>
     </a>
-    <h1>Modifier l'individu</h1>
+    <h1>Modifier le compte</h1>
 </div>
 <form action="{{ route('individus.update', $individus->id_individu) }}" method="POST">
     @csrf
@@ -98,6 +98,6 @@
         <div class="error">{{ $message }}</div>
         @enderror
     </div>
-    <button type="submit">Mettre à jour l'individu</button>
+    <button type="submit">Mettre à jour le compte</button>
 </form>
 @endsection
