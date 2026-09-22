@@ -3,10 +3,12 @@
 @section('title', 'compte')
 
 @section('content')
-    @php $currentIndividu=auth('individu')->user(); @endphp
-    <h1>Individus</h1>
+@php $currentIndividu=auth('individu')->user(); @endphp
+    <h1>compte</h1>
     <p>This is the compte index page.</p>
+    @if ($currentIndividu->estAdmin())
     <a href="{{ route('individus.create') }}" class="btn-create">Create</a>
+    @endif
     <a href="{{ route('individus.historique') }}" class="btn-create">Historique</a>
     <table>
         <thead>
