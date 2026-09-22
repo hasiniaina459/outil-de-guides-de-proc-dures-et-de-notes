@@ -2,8 +2,9 @@
 Nouvelle notification <br>
 
 TItre: {{$note->note_title}},
-Contenu :
-{{ $note->content }} .
+<br>
+Contenu : <br>
+{{ $note->content }} . <br>
 Date: {{$note->note_date->format('d/m/Y H:i')}}
 <x-mail::button :url="$confirmUrl">
 OK

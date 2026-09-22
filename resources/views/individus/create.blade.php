@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Création d\'un individu')
+@section('title', 'Création d\'un compte)
 @section('content')
     <div class="retour">
         <a href="{{ auth('individu')->check() ? route('individus.index') : route('login') }}" class="btn-index">

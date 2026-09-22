@@ -1,6 +1,6 @@
 <x-mail::message>
 Rappel : {{ $rappel->remind_title }} <br>
-Bonjour ,
+Bonjour , <br>
 {{ $individu->name }} {{ $individu->firstname }}, <br>
 Ceci est un rappel concernant la note liée : {{ $rappel->notes->note_title }}.
 <br>

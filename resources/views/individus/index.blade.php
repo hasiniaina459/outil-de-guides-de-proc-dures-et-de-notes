@@ -5,7 +5,7 @@
 @section('content')
     @php $currentIndividu=auth('individu')->user(); @endphp
     <h1>Individus</h1>
-    <p>This is the individus index page.</p>
+    <p>This is the compte index page.</p>
     <a href="{{ route('individus.create') }}" class="btn-create">Create</a>
     <a href="{{ route('individus.historique') }}" class="btn-create">Historique</a>
     <table>
