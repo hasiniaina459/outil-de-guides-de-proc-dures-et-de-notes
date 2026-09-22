@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'information individu')
+@section('title', 'information des comptes')
 @section('content')
     <div class="retour">
         <a href="{{ route('individus.index') }}" class="btn-index">
@@ -10,7 +10,7 @@
                 <path d="M5 21h7v-2H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2"></path>
             </svg>
         </a>
-        <h1>information des individus</h1>
+        <h1>information des comptes</h1>
     </div>
     <div class="champ">
         <a href="{{ route('individus.historique.download') }}" class="btn-download">

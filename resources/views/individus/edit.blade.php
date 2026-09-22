@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Modifier l\'compte')
+@section('title', 'Modifier le compte')
 @section('content')
 <div class="retour">
     <a href="{{ route('individus.index') }}" class="btn-index">

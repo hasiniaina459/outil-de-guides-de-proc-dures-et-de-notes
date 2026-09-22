@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Individus')
+@section('title', 'compte')
 
 @section('content')
     @php $currentIndividu=auth('individu')->user(); @endphp
