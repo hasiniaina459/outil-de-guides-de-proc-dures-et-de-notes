@@ -31,7 +31,6 @@
                 <th>title</th>
                 <th>date</th>
                 <th>number max</th>
-                <th>moyen</th>
             </tr>
         </thead>
         <tbody>
@@ -40,13 +39,6 @@
                 <td>{{ $rappel->remind_title }}</td>
                 <td>{{ $rappel->remind_date->format('d/m/Y H:i' )}}</td>
                 <td>{{ $rappel->remind_number }}</td>
-                <td>
-                    @if($rappel->source === 'auto')
-                    <span class="auto">auto</span>
-                    @else
-                    <span class="manuel">Manuel</span>
-                    @endif
-                </td>
             </tr>
             @endforeach
         </tbody>

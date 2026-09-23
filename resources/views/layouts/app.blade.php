@@ -9,7 +9,7 @@
         nav,
         a,
         button,
-        h1 {
+        .non-inprimer, h1 {
             display: none !important;
         }
 
@@ -40,7 +40,7 @@
                 <a href="{{ route('rappels.index') }}">Rappels</a>
                 @auth('individu')
                 @php $currentIndividu= auth('individu')->user(); @endphp
-                
+
                 @if ($currentIndividu->estAdmin())
                 <a href="{{ route('admin.demandes.index') }}">admin</a>
                 @elseif ($currentIndividu->peutDemanderAdmin())

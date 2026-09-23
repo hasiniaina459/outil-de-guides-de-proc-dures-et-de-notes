@@ -32,7 +32,6 @@
             <tr>
                 <th>title</th>
                 <th>content</th>
-                <th>status</th>
                 <th>date</th>
             </tr>
         </thead>
@@ -41,7 +40,6 @@
             <tr>
                 <td>{{ $note->note_title }}</td>
                 <td>{{ $note->content }}</td>
-                <td>{{ $note->note_status ? 'Lu' : 'non Lu'}}</td>
                 <td>{{ $note->note_date->format('d/m/Y H:i')}}</td>
             </tr>
             @endforeach

@@ -31,7 +31,6 @@
             <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>telephone</th>
                 <th>Email</th>
                 <th>Service</th>
             </tr>
@@ -41,7 +40,6 @@
             <tr>
                 <td>{{ $individu->name }}</td>
                 <td>{{ $individu->firstname }}</td>
-                <td>{{ $individu->phone }}</td>
                 <td>{{ $individu->email }}</td>
                 <td>{{$individu->service->service_name ?? 'aucun'}}</td>
             </tr>
