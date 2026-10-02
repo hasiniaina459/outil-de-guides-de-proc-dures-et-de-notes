@@ -99,40 +99,6 @@ header nav button{
     transition: all 0.5s ease-in-out;
 }
 
-
-/* spécificité plus forte que "header nav a" */
-header nav #search-results a {
-    display: block;
-    height: auto;
-    margin-top: 0;
-    padding: 8px 12px;
-    gap: 0;
-    border: none;
-    border-bottom: 1px solid #eee;
-    border-radius: 0;
-    color: #222;
-    text-align: left;
-}
-
-header nav #search-results a:hover {
-    background-color: var(--text);
-    color: var(--secondary);
-    border: none;
-    border-bottom: 1px solid #eee;
-    border-radius: 0;
-}
-
-#search-results small {
-    color: var(--accent);
-    font-weight: bold;
-    margin-right: 6px;
-}
-
-#search-results .empty {
-    padding: 8px 12px;
-    color: #666;
-}
-
 main {
     max-width: 900px;
     margin: 30px auto;
