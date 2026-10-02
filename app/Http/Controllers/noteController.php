@@ -16,7 +16,11 @@ class noteController extends Controller
      */
     public function index()
     {
-        $notes=note::all();
+        $notes=note::orderBy('note_date','asc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('note_date')
+            ->values();
         return view('notes.index',compact('notes'));
     }
 
@@ -117,12 +121,20 @@ class noteController extends Controller
     //historique
     public function historique()
     {
-        $notes = note::orderBy('note_title','asc')->get();
+        $notes = note::orderBy('note_date','asc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('note_date')
+            ->values();
         return view('notes.historique',compact('notes'));
     }
     public function historiqueDownload()
     {
-        $notes = note::orderBy('note_title','asc')->get();
+        $notes = note::orderBy('note_date','asc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('note_date')
+            ->values();
         $pdf = Pdf::loadView('notes.historique-pdf',compact('notes'));
         return $pdf->download('historique-notes.pdf');
     }

@@ -24,7 +24,6 @@ Route::get('track/note/{note}/{individu}', [NoteTrackingController::class, 'trac
 
 Route::middleware('auth:individu')->group(function(){
     Route::post('/logout',[IndividuAuthController::class,'logout'])->name('logout');
-
     //route access service
     Route::middleware('admin')->group(function () {
         Route::resource('services', ServiceController::class)

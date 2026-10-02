@@ -16,7 +16,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = service::all();
+        $services = service::orderBy('service_name', 'asc')->get();
         return view('services.index', compact('services'));
     }
 

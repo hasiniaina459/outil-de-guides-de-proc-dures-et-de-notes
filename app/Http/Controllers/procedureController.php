@@ -18,7 +18,11 @@ class procedureController extends Controller
      */
     public function index()
     {
-        $procedures=procedure::all();
+        $procedures=procedure::orderBy('add_date','desc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('add_date')
+            ->values();
         return view('procedures.index',compact('procedures'));
     }
 
@@ -138,13 +142,21 @@ class procedureController extends Controller
 
     public function historique()
     {
-        $procedures = procedure::orderBy('add_date', 'desc')->get();
+        $procedures = procedure::orderBy('add_date', 'desc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('add_date')
+            ->values();
         return view('procedures.historique', compact('procedures'));
     }
 
     public function historiqueDownload()
     {
-        $procedures = procedure::orderBy('add_date', 'desc')->get();
+        $procedures = procedure::orderBy('add_date', 'desc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('add_date')
+            ->values();
         $pdf = Pdf::loadView('procedures.historique-pdf', compact('procedures'));
         return $pdf->download('historique-procedures.pdf');
     }

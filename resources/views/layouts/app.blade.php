@@ -9,7 +9,8 @@
         nav,
         a,
         button,
-        .non-inprimer, h1 {
+        .non-inprimer,
+        h1 {
             display: none !important;
         }
 
@@ -46,7 +47,6 @@
                 @elseif ($currentIndividu->peutDemanderAdmin())
                 <a href="{{ route('demandes.create') }}"> devenir admin</a>
                 @endif
-
                 @endauth
                 <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display:inline;">
                     @csrf

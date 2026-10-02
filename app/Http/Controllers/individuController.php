@@ -18,7 +18,7 @@ class individuController extends Controller
 
     public function index()
     {
-        $individus = individu::with('service')->get();
+        $individus = individu::orderBy('name', 'asc')->with('service')->get();
         return view('individus.index', compact('individus'));
     }
 

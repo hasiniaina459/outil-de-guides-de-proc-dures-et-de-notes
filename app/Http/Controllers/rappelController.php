@@ -20,7 +20,11 @@ class rappelController extends Controller
      */
     public function index()
     {
-        $rappels=rappel::all();
+        $rappels=rappel::orderBy('remind_date','desc')
+            ->take(30)
+            ->get()
+            ->sortByDesc('remind_date')
+            ->values();
         return view('rappels.index',compact('rappels'));
     }
 
@@ -150,6 +154,7 @@ class rappelController extends Controller
         $rappels = rappel::with('notes')->get()
             ->groupBy('id_note')
             ->map(fn($groupe) => $groupe->sortByDesc('remind_number')->first())
+            ->take(30)
             ->sortByDesc('remind_number')->values();
         
             return view('rappels.historique',compact('rappels'));
@@ -160,6 +165,7 @@ class rappelController extends Controller
         $rappels = rappel::with('notes')->get()
             ->groupBy('id_note')
             ->map(fn($groupe) => $groupe->sortByDesc('remind_number')->first())
+            ->take(30)
             ->sortByDesc('remind_number')->values();
 
         $pdf = Pdf::loadView('rappels.historique-pdf',compact('rappels'));

@@ -98,6 +98,74 @@ header nav button{
     align-items: center;
     transition: all 0.5s ease-in-out;
 }
+/* recherche en direct */
+.search-box {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#search-input {
+    padding: 4px 12px;
+    border: 1px solid var(--text);
+    border-radius: 25px;
+    background-color: var(--fond);
+    color: var(--text);
+    font-family: var(--font-body);
+}
+
+#search-input::placeholder {
+    color: var(--text);
+    opacity: 0.6;
+}
+
+#search-results {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 280px;
+    max-height: 350px;
+    overflow-y: auto;
+    background-color: var(--light);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
+    z-index: 800;
+}
+
+/* spécificité plus forte que "header nav a" */
+header nav #search-results a {
+    display: block;
+    height: auto;
+    margin-top: 0;
+    padding: 8px 12px;
+    gap: 0;
+    border: none;
+    border-bottom: 1px solid #eee;
+    border-radius: 0;
+    color: #222;
+    text-align: left;
+}
+
+header nav #search-results a:hover {
+    background-color: var(--text);
+    color: var(--secondary);
+    border: none;
+    border-bottom: 1px solid #eee;
+    border-radius: 0;
+}
+
+#search-results small {
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+#search-results .empty {
+    padding: 8px 12px;
+    color: #666;
+}
 
 main {
     max-width: 900px;
